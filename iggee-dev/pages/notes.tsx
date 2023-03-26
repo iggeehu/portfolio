@@ -3,26 +3,34 @@ import Layout from './layout'
 import { useState } from 'react'
 import RecurseCenter from './notes/RecurseCenter'
 import OsNotes from './notes/OsNotes'
-
+import Network from './notes/Network'
+import Cloud from './notes/Cloud'
 
 
 export default function Home() {
+  const displayMap = {"Recurse":0,
+  "Operating System":1, 
+  "Network":2,
+  "Cloud":3}
 
-  const [showRecurse, setShowRecurse] = useState(false)
-  const [showOS, setShowOS] = useState(false)
-  const [showMisc, setShowMisc] = useState(false)
+  const [displayDial, toggleDisplay] = useState(0)
 
   const showRecurseComponent = () => {
-    if(showRecurse){return <RecurseCenter />}
+    if(displayDial==0){return <RecurseCenter />}
   }
 
   const showOSComponent = () => {
-    if(showOS){return <OsNotes />}
+    if(displayDial==1){return <OsNotes />}
   }
 
-  const showMiscComponent = () => {
-    if(showMisc){return <OsNotes />}
+  const showNetworkComponent = () => {
+    if(displayDial==2){return <Network />}
   }
+
+  const showCloudComponent = () => {
+    if(displayDial==2){return <Cloud />}
+  }
+
 
   return (
     <div className='h-full bg-silver-tree-100'>
@@ -35,28 +43,46 @@ export default function Home() {
       </Head>
       <main className="h-screen">
         <Layout>
-          <div className="index-body p-20">
-            
-            <div className="blog-subcategory font-blog text-2xl flex hover:text-silver-tree-400 cursor-default"
-            onClick={()=>setShowRecurse(!showRecurse)}
-            >
-            Recurse Center Log
-            </div>
-            {showRecurseComponent()}
+          <h2 className='font-blog'>Last Updated: Mar 26, 2023</h2>
+          <div className="notes-body p-20 flex flex-row">
+            <div className="notes-catalog basis-1/4 bg-silver-tree-300 h-96 rounded">
+                <div className="font-blog text-2xl underline text-center">Threads of Thoughts</div>
+                  <div className="blog-subcategory font-blog text-xl flex hover:bg-silver-tree-400 p-1 cursor-default"
+                  onClick={()=>{toggleDisplay(0)}}
+                  >
+                  Recurse Center Progress Tracker
+                  </div>
+                  <div className="blog-subcategory font-blog text-xl flex hover:bg-silver-tree-400 p-1 cursor-default"
+                  onClick={()=>{toggleDisplay(1)}}
+                  >
+                  Operating System Notes
+                  </div>
+                
+                  <div className="blog-subcategory font-blog text-xl flex hover:bg-silver-tree-400 hover:underline p-1 cursor-default"
+                  onClick={()=>toggleDisplay(2)}
+                  >
+                  Network Fundamentals
+                  </div>
 
-            <div className="blog-subcategory font-blog text-2xl flex hover:text-silver-tree-400  cursor-default"
-            onClick={()=>setShowOS(!showOS)}
-            >
-            Operating Systm Study Notes
+                  <div className="blog-subcategory font-blog text-xl flex hover:bg-silver-tree-400 p-1 cursor-default"
+                  onClick={()=>toggleDisplay(3)}
+                  >
+                  Cloud Computing
+                  </div>
+
+                  <div className="blog-subcategory font-blog text-xl flex hover:bg-silver-tree-400 p-1 cursor-default"
+                  onClick={()=>toggleDisplay(3)}
+                  >
+                  Literature - Reading List
+                  </div>
+                
             </div>
-            {showOSComponent()}
-            <div className="blog-subcategory font-blog text-2xl flex hover:text-silver-tree-400 cursor-default"
-            onClick={()=>setShowMisc(!showMisc)}
-            >
-            Misc
+            <div className="notes-content basis-3/4 bg-silver-tree-400 rounded-xl">
+              {showRecurseComponent()}
+              {showOSComponent()}
+              {showNetworkComponent()}
+              {showCloudComponent()}
             </div>
-            {showMiscComponent()}
-            
           </div>
         </Layout>
       </main>
