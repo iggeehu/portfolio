@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Link from 'next/link'
 
 
 export default function Navbar(){
@@ -18,19 +19,19 @@ export default function Navbar(){
                 <div>
                     <ul>
                         <li className="mb-1">
-                            <a className="block p-4 text-sm font-cyber text-silver-tree-900 hover:text-silver-tree-500 rounded" href="#">Home</a>
+                            <Link className="block p-4 text-sm font-cyber text-silver-tree-900 hover:text-silver-tree-500 rounded" href="/">Home</Link>
                         </li>
                         <li className="mb-1">
-                            <a className="block p-4 text-sm font-cyber text-silver-tree-900 hover:text-silver-tree-500 rounded" href="#">MinViaCodes</a>
+                            <Link className="block p-4 text-sm font-cyber text-silver-tree-900 hover:text-silver-tree-500 rounded" href="/minViaCodes">MinViaCodes</Link>
                         </li>
                         <li className="mb-1">
-                            <a className="block p-4 text-sm font-cyber text-silver-tree-900 hover:text-silver-tree-500 rounded" href="#">Notes</a>
+                            <Link className="block p-4 text-sm font-cyber text-silver-tree-900 hover:text-silver-tree-500 rounded" href="/notes">Notes</Link>
                         </li>
                         <li className="mb-1">
-                            <a className="block p-4 text-sm font-cyber text-silver-tree-900 hover:text-silver-tree-500 rounded" href="#">Science Fiction &</a>
+                            <Link className="block p-4 text-sm font-cyber text-silver-tree-900 hover:text-silver-tree-500 rounded" href="/scifi">Science Fiction &</Link>
                         </li>
                         <li className="mb-1">
-                            <a className="block p-4 text-sm font-cyber text-silver-tree-900 hover:text-silver-tree-500 rounded" href="#">Contact</a>
+                            <Link className="block p-4 text-sm font-cyber text-silver-tree-900 hover:text-silver-tree-500 rounded" href="/contact">Contact</Link>
                         </li>
                     </ul>
                 </div>
@@ -58,7 +59,7 @@ export default function Navbar(){
                 {/* </svg> */}
             </a>
             <div className="lg:hidden">
-                <button className="navbar-burger flex items-center text-blue-600 p-3" onClick={()=>{console.log("hi"); toggleShow(!showMenu)}}>
+                <button className="navbar-burger flex items-center text-blue-600 p-3" onClick={()=>{toggleShow(!showMenu)}}>
                     <svg className="block h-4 w-4 fill-current" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                         <title>Mobile menu</title>
                         <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
@@ -66,11 +67,11 @@ export default function Navbar(){
                 </button>
             </div>
             <ul className="hidden absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:flex lg:mx-auto lg:flex lg:items-center lg:w-auto lg:space-x-6">
-                <li><a className="text-m font-cyber text-silver-tree-900 hover:text-silver-tree-500 transition ease-in-out delay-150" href="#">Home</a></li>
-                <li><a className="text-m font-cyber text-silver-tree-900 hover:text-silver-tree-500 transition ease-in-out delay-150" href="#">MinViaCodes</a></li>
-                <li><a className="text-m font-cyber text-silver-tree-900 hover:text-silver-tree-500 transition ease-in-out delay-150" href="#">Notes</a></li>
-                <li><a className="text-m font-cyber text-silver-tree-900 hover:text-silver-tree-500 transition ease-in-out delay-150" href="#">Science Fiction &</a></li>
-                <li><a className="text-m font-cyber text-silver-tree-900 hover:text-silver-tree-500 transition ease-in-out delay-150" href="#">Contact</a></li>
+                <li><Link className="text-m font-cyber text-silver-tree-900 hover:text-silver-tree-500 transition ease-in-out delay-150" href="/">Home</Link></li>
+                <li><Link className="text-m font-cyber text-silver-tree-900 hover:text-silver-tree-500 transition ease-in-out delay-150" href="/minViaCodes">MinViaCodes</Link></li>
+                <li><Link className="text-m font-cyber text-silver-tree-900 hover:text-silver-tree-500 transition ease-in-out delay-150" href="/notes">Notes</Link></li>
+                <li><Link className="text-m font-cyber text-silver-tree-900 hover:text-silver-tree-500 transition ease-in-out delay-150" href="/scifi">Science Fiction &</Link></li>
+                <li><Link className="text-m font-cyber text-silver-tree-900 hover:text-silver-tree-500 transition ease-in-out delay-150" href="/contact">Contact</Link></li>
             </ul>
         </nav>
         {showMenu ? showDropdown() : null}

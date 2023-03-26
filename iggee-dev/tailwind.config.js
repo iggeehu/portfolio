@@ -26,7 +26,8 @@ module.exports = {
         },
     },
     fontFamily:{
-      cyber: ['"Rajdhani"'],
+      blog: ['"Kanit"'],
+      cyber:['"Rajdhani"'],
       sans: ['sans-serif'],
       serif: ['Merriweather', 'serif'], 
       mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', 'monospace']
