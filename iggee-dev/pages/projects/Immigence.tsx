@@ -16,7 +16,7 @@ export default function Immigence() {
             petition type distribution, approval status distribution, approval trends, etc.
         </p>
         <p>Written in Python flask. Libraries: Beautiful Soup, Bokeh, Redis, RQ. Database: MySQL on Amazon RDS</p>
-        <iframe className="inline" src="https://ghbtns.com/github-btn.html?user=iggeehu&repo=Immigence&type=star&size=large&text=false" frameborder="0" scrolling="0" width="170" height="30" title="GitHub"></iframe>
+        <iframe className="inline" src="https://ghbtns.com/github-btn.html?user=iggeehu&repo=Immigence&type=star&size=large&text=false" frameBorder="0" scrolling="0" width="170" height="30" title="GitHub"></iframe>
 
     </div>
   )

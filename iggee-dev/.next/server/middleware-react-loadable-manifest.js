@@ -1,1 +1,1 @@
-self.__REACT_LOADABLE_MANIFEST={}
+self.__REACT_LOADABLE_MANIFEST={"index.tsx -> react-embed-gist":{id:4089,files:["static/chunks/89.bb0e90bceee9e968.js"]}};

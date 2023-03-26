@@ -14,7 +14,7 @@ export default function RecurseCenter (){
                 <br></br>
                 <p>There are also a few residual things I need to finish up from past efforts:</p>
                 <p>1. Eventually scale & bring my Immigence site online in a real way.</p>
-                <p>2. Finish the "collected list" and "reading rooms" functionalities of my bookList app.</p>
+                <p>2. Finish the collected list and reading rooms functionalities of my bookList app.</p>
                 <p>3. Deploy the bookList app to Github Pages.</p>
                 <p>4. Polish this portfolio site & link it to the domain name</p>
                 <p>5. Contribute to the <a href="https://github.com/rq/rq">Redis Queue</a> library, my goal is to have another 2-3 PRs merged</p>

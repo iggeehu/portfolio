@@ -1,6 +1,17 @@
 {
   "/_app": "pages/_app.js",
-  "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/notes": "pages/notes.js"
+  "/api/hello": "pages/api/hello.js",
+  "/": "pages/index.html",
+  "/layout": "pages/layout.html",
+  "/minViaCodes": "pages/minViaCodes.html",
+  "/navbar": "pages/navbar.html",
+  "/notes": "pages/notes.html",
+  "/notes/Cloud": "pages/notes/Cloud.html",
+  "/notes/Network": "pages/notes/Network.html",
+  "/notes/OsNotes": "pages/notes/OsNotes.html",
+  "/notes/RecurseCenter": "pages/notes/RecurseCenter.html",
+  "/projects/Immigence": "pages/projects/Immigence.html",
+  "/_error": "pages/_error.js",
+  "/404": "pages/404.html"
 }
