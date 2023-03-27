@@ -43,7 +43,7 @@ export default function Home() {
       </Head>
       <main className="h-screen">
         <Layout>
-          <h2 className='font-blog'>Last Updated: Mar 26, 2023</h2>
+          <h2 className='font-blog'>Last Updated: Mar 27, 2023</h2>
           <div className="notes-body p-20 flex flex-row">
             <div className="notes-catalog basis-1/4 bg-silver-tree-300 h-96 rounded">
                 <div className="font-blog text-2xl underline text-center">Threads of Thoughts</div>
@@ -58,7 +58,7 @@ export default function Home() {
                   Operating System Notes
                   </div>
                 
-                  <div className="blog-subcategory font-blog text-xl flex hover:bg-silver-tree-400 hover:underline p-1 cursor-default"
+                  <div className="blog-subcategory font-blog text-xl flex hover:bg-silver-tree-400 p-1 cursor-default"
                   onClick={()=>toggleDisplay(2)}
                   >
                   Network Fundamentals
