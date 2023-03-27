@@ -25,7 +25,7 @@ export default function RecurseCenter (){
             <h2 className="text-xl font-blog">Day 0, March 27th</h2>
             <div className="text-sm font-cyber">
                 <p>The welcome call and the meet-and-greet were very fun. At some point the facilitator said that we could 
-                    leave if we feel overwhelmed by all the socialization. TBH, I did feel a bit overwhelmed. But it's worth
+                    leave if we feel overwhelmed by all the socialization. TBH, I did feel a bit overwhelmed. But it is worth
                     pushing through and talking to as many people as possible.</p>
                 <p>My batchmates are working on some very fun things: audio signal compiler, network protocol that bypasses censorship.
                     I have to follow up with some of their projects.
@@ -39,7 +39,7 @@ export default function RecurseCenter (){
                 </p>
                 <p>4. Went to a Distributed System Reading Group.</p>
                 <br></br>
-                <p>I'd say I did about 60% of what I set out to do, which is always the case in my biting-off-more-than-can-chew
+                <p>I would say I did about 60% of what I set out to do, which is always the case in my biting-off-more-than-can-chew
                 style</p>
             
                 <p className="text-lg font-bold">Plan for tomorrow:</p>
@@ -47,7 +47,7 @@ export default function RecurseCenter (){
                 <p>2. Read about 20 pages of the Operating System: Three Easy Pieces Book.</p>
                 <p>3. Read about 20 pages of the TCP/IP Illustrated book.</p>
                 <p>3. Afternoon hack and tell 5-7pm, probably have to take care of the baby 3-5pm in exchange for the late session.
-                    So grandma won't be overtired. </p>
+                    So grandma will not be overtired. </p>
                 <p>4. 1 DFS leetcode question.</p>
             </div>
          </div>
