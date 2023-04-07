@@ -26,7 +26,7 @@ export default function Network (){
                         DPI blocking: packet-level filtering which identifies origins of traffic.
                     </li>
                     <li>
-                        Deep packet inspection: DPI does not "decrypt" what's inside packets but identifies the protocol of the source apps.
+                        Deep packet inspection: DPI does not &quot; decrypt &quot; what&apos;s inside packets but identifies the protocol of the source apps.
                     </li>
                     <li>OSI reference model: short for Open Systems Interconnection Model. This is something I encountered in the TCP/IP book.
                         It has 7 layers, each layer deals with one level of abstraction in networking - application, presentation, session, transport

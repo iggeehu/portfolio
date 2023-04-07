@@ -10,7 +10,7 @@ export default function RecurseCenter (){
                 <p>2. Networking, most importantly, the TCP/IP protocol.</p>
                 <p>3. Distributed systems with a focus on Cloud computing.</p>
                 <br></br>
-                <p>Let's see how reality pans out differently!</p>
+                <p>Let&apos;s see how reality pans out differently!</p>
                 <br></br>
             </div>
         </div>
@@ -37,7 +37,7 @@ export default function RecurseCenter (){
             <h2 className="text-xl font-blog">Day 2, March 29th</h2>
             <div className="text-lg font-cyber">
                 <p>1. Set up QEMU to test my baby Linux modules, but Ubuntu failed to boot on it.</p>
-                <p>2. Read first chapter of Nand2Tetris & set up proj environment for tomorrow's pairing.</p>
+                <p>2. Read first chapter of Nand2Tetris & set up proj environment for tomorrow&apos;s pairing.</p>
                 <p>3. Preliminary commitment to Django Chat Project.</p>
                 <p>4. Coffee chat with Sara about HTTP/CDN caching and her hardware interest. </p>
             </div>
@@ -63,7 +63,7 @@ export default function RecurseCenter (){
          <div className="Day5 p-2">
             <h2 className="text-xl font-blog">Day 5, April 3rd</h2>
             <div className="text-lg font-cyber">
-                <p>1. Prepared presentation for Proz.com Translator Training - titled 'Translating For Tech'.</p>
+                <p>1. Prepared presentation for Proz.com Translator Training - titled &apos;Translating For Tech&apos;.</p>
                 <p>2. Did Nand2Tetris Project 2: Building an ALU, half-adder, and full-adder chip.</p>
                 <p>3. Installed Ubuntu on my new LG gram. </p>
                 <p>4. Spent the afternoon setting up Docker for Django app with Blake, Katherine, Enric, and Tom. </p>
@@ -85,7 +85,7 @@ export default function RecurseCenter (){
                 <p>1. Gave the 2-hour training on Proz.com, very successful!</p>
                 <p>2. Facilitated meeting about Django app next steps: CI/CD & Vulnerability Scan & Version Control etiquette.</p>
                 <p>3. Paired and exchanged versions for Nand2Tetris Project 2.</p>
-                <p>4. Figured out my new ubuntu machine's software dependency issue.</p>
+                <p>4. Figured out my new ubuntu machine&apos;s software dependency issue.</p>
             </div>
          </div>
 
