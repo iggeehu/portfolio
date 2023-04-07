@@ -3,54 +3,101 @@ export default function RecurseCenter (){
     return (<div>
         <div className="Day-1 p-2">
             <h2 className="text-xl font-blog">Day Minus 1, March 26th</h2>
-            <div className="text-sm font-cyber">
+            <div className="text-lg font-cyber">
                 <p>I am very happy to be accepted to Recurse Center. Tomorrow, March 27th, will be the first day of the batch.</p>
                 <p>There are a few new areas of knowledge I am interested in, by order of importance:</p>
                 <p>1. Operating Systems, with an emphasis on the Linux Kernel.</p>
                 <p>2. Networking, most importantly, the TCP/IP protocol.</p>
                 <p>3. Distributed systems with a focus on Cloud computing.</p>
                 <br></br>
-                <p>As to the concrete projects that come of this, I am trying to keep an open mind and let them come.</p>
+                <p>Let's see how reality pans out differently!</p>
                 <br></br>
-                <p>There are also a few residual things I need to finish up from past efforts:</p>
-                <p>1. Eventually scale & bring my Immigence site online in a real way.</p>
-                <p>2. Finish the collected list and reading rooms functionalities of my bookList app.</p>
-                <p>3. Deploy the bookList app to Github Pages.</p>
-                <p>4. Polish this portfolio site & link it to the domain name</p>
-                <p>5. Contribute to the <a href="https://github.com/rq/rq">Redis Queue</a> library, my goal is to have another 2-3 PRs merged</p>
             </div>
         </div>
 
-        <div className="Day1 p-2">
+        <div className="Day0 p-2">
             <h2 className="text-xl font-blog">Day 0, March 27th</h2>
-            <div className="text-sm font-cyber">
-                <p>The welcome call and the meet-and-greet were very fun. At some point the facilitator said that we could 
-                    leave if we feel overwhelmed by all the socialization. TBH, I did feel a bit overwhelmed. But it is worth
-                    pushing through and talking to as many people as possible.</p>
-                <p>My batchmates are working on some very fun things: audio signal compiler, network protocol that bypasses censorship.
-                    I have to follow up with some of their projects.
-                </p>
-                <p className="text-lg font-bold">What I did today:</p>
-                <p>1. Read about 20 pages of the Operating System: Three Easy Pieces Book.</p>
-                <p>2. Wrote a blog post about fair-share scheduling and multicore scheduling. Blog posts. or study notes,
-                    are very helpful for reviewing content I learned about earlier. It did take a bit too long.</p>
-                <p>3. Did a DFS leetcode question. The tweaking of the DFS recursive functon is the fun part and sometimes
-                    can go very wrong. Jaja!
-                </p>
-                <p>4. Went to a Distributed System Reading Group.</p>
-                <br></br>
-                <p>I would say I did about 60% of what I set out to do, which is always the case in my biting-off-more-than-can-chew
-                style</p>
-            
-                <p className="text-lg font-bold">Plan for tomorrow:</p>
-                <p>1. Pairing workshop.</p>
-                <p>2. Read about 20 pages of the Operating System: Three Easy Pieces Book.</p>
-                <p>3. Read about 20 pages of the TCP/IP Illustrated book.</p>
-                <p>3. Afternoon hack and tell 5-7pm, probably have to take care of the baby 3-5pm in exchange for the late session.
-                    So grandma will not be overtired. </p>
-                <p>4. 1 DFS leetcode question.</p>
+            <div className="text-lg font-cyber">
+                <p>1. 20 pages of the Operating System: Three Easy Pieces.</p>
+                <p>2. Wrote a blog about fair-share scheduling and multicore scheduling. </p>
             </div>
          </div>
+
+         <div className="Day1 p-2">
+            <h2 className="text-xl font-blog">Day 1, March 28th</h2>
+            <div className="text-lg font-cyber">
+                <p>1. Did pair programming with batchmate Stana on a game of Mastermind.</p>
+                <p>2. A hard leetcode graph question for fun.</p>
+                <p>3. Started reading about Linux Device Drivers</p>
+                <p>4. Organized DDIA (Designing Data Intensive Application) Book Club.</p>
+            </div>
+         </div>
+
+         <div className="Day2 p-2">
+            <h2 className="text-xl font-blog">Day 2, March 29th</h2>
+            <div className="text-lg font-cyber">
+                <p>1. Set up QEMU to test my baby Linux modules, but Ubuntu failed to boot on it.</p>
+                <p>2. Read first chapter of Nand2Tetris & set up proj environment for tomorrow's pairing.</p>
+                <p>3. Preliminary commitment to Django Chat Project.</p>
+                <p>4. Coffee chat with Sara about HTTP/CDN caching and her hardware interest. </p>
+            </div>
+         </div>
+
+         <div className="Day3 p-2">
+            <h2 className="text-xl font-blog">Day 3, March 30th</h2>
+            <div className="text-lg font-cyber">
+                <p>1. Nand2Tetris project1: paired with friends to write hdl for basic logic gates.</p>
+                <p>2. Tried Debian on Qemu, installation is successful, but restart broke QEMU.</p>
+                <p>3. First Django Chat Meeting. Will do DB design & Auth. </p>
+            </div>
+         </div>
+
+         <div className="Day4 p-2">
+            <h2 className="text-xl font-blog">Day 4, March 31th</h2>
+            <div className="text-lg font-cyber">
+                <p>1. Read 2 chapters of Linux Device Driver book.</p>
+                <p>2. First meet for censorship resistant reading group. Read about Plugged Transports.</p>
+            </div>
+         </div>
+
+         <div className="Day5 p-2">
+            <h2 className="text-xl font-blog">Day 5, April 3rd</h2>
+            <div className="text-lg font-cyber">
+                <p>1. Prepared presentation for Proz.com Translator Training - titled 'Translating For Tech'.</p>
+                <p>2. Did Nand2Tetris Project 2: Building an ALU, half-adder, and full-adder chip.</p>
+                <p>3. Installed Ubuntu on my new LG gram. </p>
+                <p>4. Spent the afternoon setting up Docker for Django app with Blake, Katherine, Enric, and Tom. </p>
+            </div>
+         </div>
+
+         <div className="Day6 p-2">
+            <h2 className="text-xl font-blog">Day 6, April 4th</h2>
+            <div className="text-lg font-cyber">
+                <p>1. Hosted DDIA Reading Club.</p>
+                <p>2. Neetcode Practice where Alan tried Typescript for the first time.</p>
+                <p>3. Met with Nikki and banged out a DB design for the chat app. </p>
+            </div>
+         </div>
+
+         <div className="Day7 p-2">
+            <h2 className="text-xl font-blog">Day 7, April 6th</h2>
+            <div className="text-lg font-cyber">
+                <p>1. Gave the 2-hour training on Proz.com, very successful!</p>
+                <p>2. Facilitated meeting about Django app next steps: CI/CD & Vulnerability Scan & Version Control etiquette.</p>
+                <p>3. Paired and exchanged versions for Nand2Tetris Project 2.</p>
+                <p>4. Figured out my new ubuntu machine's software dependency issue.</p>
+            </div>
+         </div>
+
+         <div className="Day8 p-2">
+            <h2 className="text-xl font-blog">Day 8, April 7th</h2>
+            <div className="text-lg font-cyber">
+                <p>1. Styled edit window and profile page of my Booklist app.</p>
+                <p>2. Created gif demos for my Immigence Readme.md.</p>
+                <p>3. </p>
+            </div>
+         </div>
+
     </div>)
 
 }
