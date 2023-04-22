@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Layout from './layout'
 import { useState } from 'react'
 import Immigence from './projects/Immigence'
+import BookList from './projects/BookList'
 
 export default function Home() {
 
@@ -23,6 +24,10 @@ export default function Home() {
             
             <div className="project-child font-blog rounded">
             <Immigence />
+            </div>
+
+            <div className="project-child font-blog rounded">
+            <BookList />
             </div>
             
 

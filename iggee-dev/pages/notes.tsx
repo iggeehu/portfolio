@@ -67,13 +67,7 @@ export default function Home() {
                   <div className="blog-subcategory font-blog text-xl flex hover:bg-silver-tree-400 p-1 cursor-default"
                   onClick={()=>toggleDisplay(3)}
                   >
-                  Cloud Computing
-                  </div>
-
-                  <div className="blog-subcategory font-blog text-xl flex hover:bg-silver-tree-400 p-1 cursor-default"
-                  onClick={()=>toggleDisplay(3)}
-                  >
-                  Literature - Reading List
+                  Cloud Computing/DevOps
                   </div>
                 
             </div>

@@ -4,7 +4,7 @@ import { useState } from 'react'
 
 export default function Immigence() {
 
-  const [showRecurse, setShowRecurse] = useState(false)  
+
 
   return (
     <div className='h-full bg-silver-tree-200 rounded p-3'>
