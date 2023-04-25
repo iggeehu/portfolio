@@ -20,7 +20,7 @@ export default function Home() {
       <main className="h-screen">
         <Layout>
           <h2 className="p-5 font-blog text-2xl text-center">Projects Showcase</h2>
-          <div className="projects-body grid grid-cols-3 p-20">
+          <div className="projects-body p-10 grid lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-1">
             
             <div className="project-child font-blog rounded">
             <Immigence />

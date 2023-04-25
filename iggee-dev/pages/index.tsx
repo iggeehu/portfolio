@@ -54,14 +54,12 @@ export default function Home() {
             waiting for the work permit, etc), I started teaching myself computer science.
             <br></br>
             <br></br>
-            I started with the classic MERN stack. The beauty of self-teaching is that eventually, you 
-            get fast at learning new techs (learned next.js for this portfolio site, kind of an overkill but fun). 
+            I started with the classic MERN stack. Then I ventured into Python/Django/Flask. 
             I have written python data projects employing MySQL and pandas. I have 
-            written an OOP-style clone of Space Invaders in Java. I have also dabbled with OS scheduling & locking 
-            in C.
+            written an OOP-style clone of Space Invaders in Java. I have also some experience with Linux kernel programming.
             <br></br>
             <br></br>
-            Currently, my interests are in lower-level fundamentals because I found that knowing these things always helped me be a better programmer. 
+          
             <br></br>
             <br></br>
             Previously, I worked as a full-time interpreter/translator and technical writer. I also briefly worked a video producer
@@ -81,7 +79,7 @@ export default function Home() {
       ssr: false,
   });
     return(
-      <div className="Hello.java p-10">
+      <div className="Hello.java lg:p-10 md:p-10 sm:p-2 sm: w-full">
           <ReactEmbedGist gist="iggeehu/6e8f094289c26e00029d4598e603cc2c" />
       </div>
     )
@@ -98,7 +96,7 @@ export default function Home() {
       </Head>
       <main className="">
         <Layout>
-          <div className="index-body p-20">
+          <div className="index-body md:p-20 lg:p-20 sm:p-1">
             <div className="index-title flex flex-row items-center">
               <div>{hellotxtButton()}</div>
               <div>{hellojavaButton()}</div>

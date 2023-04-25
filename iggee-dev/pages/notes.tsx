@@ -44,7 +44,7 @@ export default function Home() {
       <main className="h-screen">
         <Layout>
           <h2 className='font-blog'>Last Updated: Mar 27, 2023</h2>
-          <div className="notes-body p-20 flex flex-row">
+          <div className="notes-body p-10 flex flex-col lg:flex-row">
             <div className="notes-catalog basis-1/4 bg-silver-tree-300 h-96 rounded">
                 <div className="font-blog text-2xl underline text-center">Threads of Thoughts</div>
                   <div className="blog-subcategory font-blog text-xl flex hover:bg-silver-tree-400 p-1 cursor-default"
@@ -69,7 +69,6 @@ export default function Home() {
                   >
                   Cloud Computing/DevOps
                   </div>
-                
             </div>
             <div className="notes-content basis-3/4 bg-silver-tree-400 rounded-xl">
               {showRecurseComponent()}
