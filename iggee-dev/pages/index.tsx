@@ -79,7 +79,7 @@ export default function Home() {
       ssr: false,
   });
     return(
-      <div className="Hello.java lg:p-10 md:p-10 sm:p-2 sm: w-full">
+      <div className="Hello.java lg:p-10 md:p-10 sm:p-2 sm:w-full">
           <ReactEmbedGist gist="iggeehu/6e8f094289c26e00029d4598e603cc2c" />
       </div>
     )

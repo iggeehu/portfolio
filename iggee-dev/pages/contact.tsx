@@ -18,13 +18,14 @@ export default function Home() {
           <h2 className="p-5 font-blog text-2xl text-center">Talk to me: </h2>
           <div className="text-xl text-center">
             <a href="tianci@iggee.dev">tianci@iggee.dev</a>
-            {/* <a href="https://github.com/iggeehu" className="icon github" title="GitHub">
-              
+            <br></br>
+            <a href="https://github.com/iggeehu" className="icon github" title="GitHub">
+              GitHub
             </a>
-            
-            <a href="https://www.linkedin.com/in/iggee" className="icon linkedin" title="LinkedIn"> */}
-{/*                
-            </a> */}
+            <br></br>
+            <a href="https://www.linkedin.com/in/iggee" className="icon linkedin" title="LinkedIn"> 
+              LinkedIn
+            </a>s
            
             
           </div>
