@@ -10,7 +10,7 @@ export default function BookList() {
         <h3 className='bg-silver-tree-400'>BookList</h3>
         <a href="https://immigence.herokuapp.com/" className='bg-silver-tree-200'>Deployed Demo Coming Soon</a>
         <p className='text-s text-silver-tree-800'>
-          1. place to organize your reading library and browse other people's list. 
+          1. place to organize your reading library and browse lists made by the community. 
         </p>
         <p className='text-s text-silver-tree-800'>
           2. Share your lists on social media or output as PDF.

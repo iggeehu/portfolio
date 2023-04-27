@@ -25,7 +25,7 @@ export default function Home() {
             <br></br>
             <a href="https://www.linkedin.com/in/iggee" className="icon linkedin" title="LinkedIn"> 
               LinkedIn
-            </a>s
+            </a>
            
             
           </div>
