@@ -9,7 +9,7 @@ export default function Immigence() {
   return (
     <div className='h-full bg-silver-tree-200 rounded p-3'>
         <h3 className='bg-silver-tree-400'>Immigence: Your USCIS Insights</h3>
-        <a href="https://immigence.herokuapp.com/" className='bg-silver-tree-200 hover:underline'>https://immigence.herokuapp.com</a>
+        <a href="https://immigence.herokuapp.com/" className='bg-silver-tree-200 hover:underline'>https://immigence.herokuapp.com  (free-tier Heroku, plz be patient!)</a>
         <p className='text-s text-silver-tree-800'>You are a new immigrant waiting impatiently for your petition to be approved.
             With Immigence, you can submit your case information, and a web crawler will
             scan the 5000 cases in your case range daily, offering you insights such as 
