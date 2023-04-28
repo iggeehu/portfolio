@@ -8,7 +8,7 @@ export default function BookList() {
   return (
     <div className='h-full bg-silver-tree-200 rounded p-3'>
         <h3 className='bg-silver-tree-400'>BookList</h3>
-        <a href="https://immigence.herokuapp.com/" className='bg-silver-tree-200'>Deployed Demo Coming Soon</a>
+        <a href="https://github.com/iggeehu/bookList" className='bg-silver-tree-200 hover:underline ease-in'>See GIF Demo Here</a>
         <p className='text-s text-silver-tree-800'>
           1. place to organize your reading library and browse lists made by the community. 
         </p>

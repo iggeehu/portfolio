@@ -41,7 +41,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
 
       </Head>
-      <main className="h-screen">
+      <main className="h-full">
         <Layout>
           <h2 className='font-blog'>Last Updated: Mar 27, 2023</h2>
           <div className="notes-body p-10 flex flex-col lg:flex-row">
