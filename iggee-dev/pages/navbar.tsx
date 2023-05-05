@@ -28,7 +28,7 @@ export default function Navbar(){
                             <Link className="block p-4 text-sm font-cyber text-silver-tree-900 hover:text-silver-tree-500 rounded" href="/notes">Notes</Link>
                         </li>
                         <li className="mb-1">
-                            <Link className="block p-4 text-sm font-cyber text-silver-tree-900 hover:text-silver-tree-500 rounded" href="/scifi">Science Fiction &</Link>
+                            <Link className="block p-4 text-sm font-cyber text-silver-tree-900 hover:text-silver-tree-500 rounded" href="/cooking">Cooking</Link>
                         </li>
                         <li className="mb-1">
                             <Link className="block p-4 text-sm font-cyber text-silver-tree-900 hover:text-silver-tree-500 rounded" href="/contact">Contact</Link>
@@ -53,7 +53,7 @@ export default function Navbar(){
         <div className='navBar bg-silver-tree-200'>
            
             <nav className="relative px-4 py-4 flex justify-between items-center">
-            <a className="text-3xl font-bold font-cyber from-silver-tree-200 via-silver-tree-500 to-silver-tree-900 bg-clip-text" href="#">
+            <a className="text-3xl text-pink-500 font-bold font-cyber from-silver-tree-200 via-silver-tree-500 to-silver-tree-900 bg-clip-text" href="#">
                 {/* <svg className="h-10" alt="logo" viewBox="0 0 10240 10240"> */}
                 Tianci Hu Marrero
                 {/* </svg> */}
@@ -70,7 +70,7 @@ export default function Navbar(){
                 <li><Link className="text-m font-cyber text-silver-tree-900 hover:text-silver-tree-500 transition ease-in-out delay-150" href="/">Home</Link></li>
                 <li><Link className="text-m font-cyber text-silver-tree-900 hover:text-silver-tree-500 transition ease-in-out delay-150" href="/minViaCodes">MinViaCodes</Link></li>
                 <li><Link className="text-m font-cyber text-silver-tree-900 hover:text-silver-tree-500 transition ease-in-out delay-150" href="/notes">Notes</Link></li>
-                <li><Link className="text-m font-cyber text-silver-tree-900 hover:text-silver-tree-500 transition ease-in-out delay-150" href="/scifi">Science Fiction &</Link></li>
+                <li><Link className="text-m font-cyber text-silver-tree-900 hover:text-silver-tree-500 transition ease-in-out delay-150" href="/cooking">Cooking</Link></li>
                 <li><Link className="text-m font-cyber text-silver-tree-900 hover:text-silver-tree-500 transition ease-in-out delay-150" href="/contact">Contact</Link></li>
             </ul>
         </nav>

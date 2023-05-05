@@ -12,7 +12,7 @@ type Props = {
 
 const Layout = ({ children, title = 'Tianci Hu Marrero' }: Props) => (
   <div className="w-full
-  h-screen
+  h-full
   bg-gradient-to-r
   from-silver-tree-50
   via-silver-tree-300
