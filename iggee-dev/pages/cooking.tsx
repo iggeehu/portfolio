@@ -18,6 +18,10 @@ export default function Home() {
           <div className="text_shadows text-2xl text-center p-20">
             Eggy & Bison Bento Boxes  
           </div>
+          <div className="text-l text-center">
+            (If after seeing this, you want to hire me as a cook, please remember I would much rather do programming LOL.)
+          </div>
+          <br></br>
           <div className="text-xl text-center">
             During 2022, I was stuck at home waiting for my work permit & social security. I started making elaborate bento boxes for my husband, Bison.
           </div>
@@ -34,7 +38,7 @@ export default function Home() {
           <p className="text-center">.</p>
           <p className="text-center">.</p>
 
-          <div className="flex p-3">
+          <div className="flex flex-col md:flex-row p-3">
             <div className="basis-1/2">
             <img src="https://i.imgur.com/vMPF8mO.jpg" alt="eggtomato" className='m-auto w-2/3 p-2' title="source: imgur.com" />
             <p className='text-center'>Egg & tomato (my childhood fave) and shrimp with corn</p>
@@ -54,7 +58,7 @@ export default function Home() {
           <p className="text-center">.</p>
           <p className="text-center">.</p>
 
-          <div className="flex p-3"> 
+          <div className="flex flex-col md:flex-row p-3"> 
             <div className="basis-1/2">
             <img src="https://i.imgur.com/HMeHLCs.png"  alt="sesameballs" className='m-auto w-2/3 p-2' title="source: imgur.com" />
             <p className='text-center'>Fried rice and sesame balls</p>
@@ -74,7 +78,7 @@ export default function Home() {
           <p className="text-center">.</p>
           <p className="text-center">.</p>
 
-          <div className="flex p-3"> 
+          <div className="flex flex-col md:flex-row p-3"> 
             <div className="basis-1/2">
             <img src="https://i.imgur.com/x5gHwWx.jpg"  alt="mushroom" className='m-auto w-2/3 p-2' title="source: imgur.com" />
             <p className='text-center'>Egg & Mushroom, Stir-fried Cauliflower, and Three-Cup Chicken</p>
@@ -138,7 +142,7 @@ export default function Home() {
 
           <br></br>
 
-          <div className="m-auto flex">
+          <div className="m-auto flex flex-col lg:flex-row">
 
             <div className="basis-1/3">
             <img src="https://i.imgur.com/ejUXBp1.png"  alt="bison" className='m-auto w-2/3 p-2' title="source: imgur.com" />
@@ -156,6 +160,12 @@ export default function Home() {
             </div>
           </div>
 
+          
+          <div className="flex-col">
+            <img src="https://i.imgur.com/hvimLJF.png"  alt="Pearly" className='m-auto w-1/2 p-2 rotate-90' title="source: imgur.com" />
+            <p className='text-center'>And Hubei-style Pearl Meatballs</p>
+          </div>
+
           <p className="m-auto">.</p>
           <p className="text-center">.</p>
           <p className="text-center">.</p>
@@ -166,9 +176,43 @@ export default function Home() {
           <p className="text-center">.</p>
           <p className="text-center">.</p>
           <p className="text-center">.</p>
-          <div>There are still about 30 bentos to show...but I will do it later!</div>
+          <div className="text-xl text-center">Bison is a big fan of Chinese food but he cannot ONLY EAT Chinese food like I do (such a Laowai). Once in a while he will sigh and say: &lsquo; I really miss Puerto_Rican_Food. &rsquo; </div>
+          <p className="text-center">.</p>
+          <p className="text-center">.</p>
+          <p className="text-center">.</p>
+          <p className="text-center">.</p>
+          <p className="text-center">.</p>
+          <p className="text-center">.</p>
+          <p className="text-center">.</p>
+          <p className="text-center">.</p>
+          <div className="text-xl text-center">So I said - &lsquo; Don't complain if it's not authentic! &rsquo; </div>
+          <div className="text-xl text-center">And I went on Youtube and watched most videos of Puerto Rican ladies cooking in dimly-lit concrete houses</div>
+
+          <div className="flex-col">
+            <img src="https://i.imgur.com/oPXYyHe.png" alt="Pearly" className='m-auto w-1/2 p-2' title="source: imgur.com" />
+            <p className='text-center'>My first attempt: Arepas and bifstek (my Chinese supermarket has a great selection Latin ingredients, it turns out)</p>
+          </div>
+
+          <div className="m-auto flex flex-col lg:flex-row">
+
+            <div className="basis-1/2">
+            <img src="https://i.imgur.com/4DF2xEx.png"  alt="Pernil" className='m-auto w-4/5 p-2' title="source: imgur.com" />
+            <p className='text-center'>Pernil, Spanish rice, and beans (not much to look at but took so long)</p>
+            </div>
+
+            <div className="basis-1/2">
+            <img src="https://i.imgur.com/qziZ9q9.png"  alt="accappurias" className='m-auto w-full p-2' title="source: imgur.com" />
+            <p className='text-center'>Accapurrias - did I spell it right? Another Herculean effort with ground-up plantains and yucca</p>
+            </div>
+
+          </div>
+
+          <div className="flex-col">
+            <img src="https://i.imgur.com/xqbpvkW.png" alt="Pearly" className='m-auto w-1/2 p-2' title="source: imgur.com" />
+            <p className='text-center'>And finally: MOFONGO (Bison might have fallen in love w me again, but I only made Mofongo once)</p>
+          </div>
           
-          
+          <div className="text-center text-2xl"> To Be CONTINUED.....</div>
         </Layout>
       </main>
     </div>
