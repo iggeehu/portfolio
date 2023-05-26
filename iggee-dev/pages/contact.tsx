@@ -13,7 +13,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
 
       </Head>
-      <main className="h-screen">
+      <main className="h-screen p-10">
         <Layout>
           <h2 className="p-5 font-blog text-2xl text-center">Talk to me: </h2>
           <div className="text-xl text-center">

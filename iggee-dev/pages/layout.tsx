@@ -8,16 +8,16 @@ type Props = {
   title?: string
 }
 
-
+//   bg-gradient-to-r
+//   from-silver-tree-50
+//   via-silver-tree-300
+//   to-silver-tree-500
+//   background-animate
 
 const Layout = ({ children, title = 'Tianci Hu Marrero' }: Props) => (
   <div className="w-full
-  h-full
-  bg-gradient-to-r
-  from-silver-tree-50
-  via-silver-tree-300
-  to-silver-tree-500
-  background-animate">
+  h-full bg-white
+  ">
     <Head>
       <title>{title}</title>
       <meta charSet="utf-8" />

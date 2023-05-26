@@ -25,7 +25,7 @@ export default function Navbar(){
                             <Link className="block p-4 text-sm font-cyber text-silver-tree-900 hover:text-silver-tree-500 rounded" href="/minViaCodes">MinViaCodes</Link>
                         </li>
                         <li className="mb-1">
-                            <Link className="block p-4 text-sm font-cyber text-silver-tree-900 hover:text-silver-tree-500 rounded" href="/notes">Notes</Link>
+                            <Link className="block p-4 text-sm font-cyber text-silver-tree-900 hover:text-silver-tree-500 rounded" href="/blog">Blog</Link>
                         </li>
                         <li className="mb-1">
                             <Link className="block p-4 text-sm font-cyber text-silver-tree-900 hover:text-silver-tree-500 rounded" href="/cooking">Cooking</Link>
@@ -50,7 +50,7 @@ export default function Navbar(){
     }
 
     return (
-        <div className='navBar bg-silver-tree-200'>
+        <div className='navBar bg-silver-tree-100 border-b-2 border-indigo-300'>
            
             <nav className="relative px-4 py-4 flex justify-between items-center">
             <a className="text-3xl text-pink-500 font-bold font-cyber from-silver-tree-200 via-silver-tree-500 to-silver-tree-900 bg-clip-text" href="#">
@@ -69,7 +69,7 @@ export default function Navbar(){
             <ul className="hidden absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:flex lg:mx-auto lg:flex lg:items-center lg:w-auto lg:space-x-6">
                 <li><Link className="text-m font-cyber text-silver-tree-900 hover:text-silver-tree-500 transition ease-in-out delay-150" href="/">Home</Link></li>
                 <li><Link className="text-m font-cyber text-silver-tree-900 hover:text-silver-tree-500 transition ease-in-out delay-150" href="/minViaCodes">MinViaCodes</Link></li>
-                <li><Link className="text-m font-cyber text-silver-tree-900 hover:text-silver-tree-500 transition ease-in-out delay-150" href="/notes">Notes</Link></li>
+                <li><Link className="text-m font-cyber text-silver-tree-900 hover:text-silver-tree-500 transition ease-in-out delay-150" href="/blog">Blog</Link></li>
                 <li><Link className="text-m font-cyber text-silver-tree-900 hover:text-silver-tree-500 transition ease-in-out delay-150" href="/cooking">Cooking</Link></li>
                 <li><Link className="text-m font-cyber text-silver-tree-900 hover:text-silver-tree-500 transition ease-in-out delay-150" href="/contact">Contact</Link></li>
             </ul>

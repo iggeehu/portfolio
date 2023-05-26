@@ -13,7 +13,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
 
       </Head>
-      <main className="h-full">
+      <main className="h-full p-10 bg-silver-tree-100">
         <Layout>
           <div className="text_shadows text-2xl text-center p-20">
             Eggy & Bison Bento Boxes  

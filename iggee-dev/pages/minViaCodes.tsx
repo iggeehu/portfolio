@@ -17,7 +17,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
 
       </Head>
-      <main className="h-screen">
+      <main className="h-screen p-10">
         <Layout>
           <h2 className="p-5 font-blog text-2xl text-center">Projects Showcase</h2>
           <div className="projects-body p-10 grid lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-1">
