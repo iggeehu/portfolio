@@ -24,7 +24,6 @@ import Date from "../components/date";
 
 export async function getStaticProps() {
   const allPostsData: any = getSortedPostsData();
-  console.log(allPostsData);
   return {
     props: {
       allPostsData,
@@ -47,19 +46,19 @@ export default function Home({ allPostsData }) {
           <section className="">
             <div className=" flex flex-cols p-10">
               <div className="notes-date basis-1/4 bg-silver-tree-200 h-96 rounded">
-                Blogs
+                (This page is still under construction, check back periodically!)
               </div>
-              <ul className="notes-content basis-3/4 bg-silver-tree-200 font-blog rounded-xl">
-                {allPostsData.map(({ id, date, title }) => (
-                  <Link href={`/blogs/${id}`}>
+              <ul className="notes-content basis-3/4 bg-silver-tree-200 font-blog rounded-xl p-5">
+                {allPostsData.map(({ id, date, title, keywords }) => (
                   <li className="" key={id}>
-                    {title}
+                    <div>
+                    <Link href={`/blogs/${id}`}>{title}</Link>
+                      <br />
+                      <div className="text-sm text-current text-orange-400">{keywords}</div>
+                      <div className="text-sm">{date}</div>
+                    </div>
                     <br />
-                    {id}
-                    <br />
-                    {date}
                   </li>
-                  </Link>
                 ))}
               </ul>
             </div>

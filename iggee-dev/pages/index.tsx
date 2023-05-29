@@ -2,7 +2,6 @@ import Head from "next/head";
 import dynamic from "next/dynamic";
 import Layout from "./layout";
 import react from "react";
-import { useState } from "react";
 
 export default function Home() {
   return (
@@ -33,8 +32,7 @@ export default function Home() {
                   learning programming. Software engineering has allowed me to
                   solve thorny, murky problems that I could not approach before.
                   It also helped me become a more detail-oriented and persistent
-                  person. I like clean and extensible code. I like test-driven
-                  development and well-documented workflows.
+                  person.
                 </p>
                 <br />
                 <h2 className="text-center text-xl font-bold">~ Education ~</h2>
@@ -149,8 +147,9 @@ export default function Home() {
                 <br />
                 <br />
                 <h2 className="text-center text-xl font-bold">
-                  ~ Projects & Open Source Contribs{" "}~
-                </h2> <br />
+                  ~ Projects & Open Source Contribs ~
+                </h2>{" "}
+                <br />
                 <table className="text-l border">
                   <tr className="border">
                     <td className="font-bold">Name</td>
@@ -193,69 +192,76 @@ export default function Home() {
                   ~ Work Experience ~
                 </h2>
                 <h3 className="font-bold text-l">Programmer Fellow</h3>
-                Recurse Center (March - June, 2023) 
-                <br/>
-                Recurse Center is a
-                selective retreat for curious programmers to explore their
-                intellectual interests and collaborate. <br />
-                - Wrote toy Assemblers &
-                Compilers, and Operating Systems. <br />
-                - Studied Censorship Resistant
-                Network Protocols & Data-intensive Application Design. <br />
-                - Created
-                a Django Chat App with Chat GPT integration with batchmates.
-                <br /><br />
-
-                <h3 className="font-bold text-l">Translator & Technical Writer</h3>
+                Recurse Center (March - June, 2023)
+                <br />
+                Recurse Center is a selective retreat for curious programmers to
+                explore their intellectual interests and collaborate. <br />-
+                Wrote toy Assemblers & Compilers, and Operating Systems. <br />
+                - Studied Censorship Resistant Network Protocols &
+                Data-intensive Application Design. <br />
+                - Created a Django Chat App with Chat GPT integration with
+                batchmates.
+                <br />
+                <br />
+                <h3 className="font-bold text-l">
+                  Translator & Technical Writer
+                </h3>
                 Self-Employed (December 2016 - February 2023) <br />
-                - Transcreated
-                API-documentation from Chinese to English for English-speaking
-                developers. <br />
-                - Created marketing copies and documentation for CRM
-                software vendors and fintech products. <br />
-                - Published Christian
-                Anderson Fairytales and Mary Karr's "The Liars Club" in Chinese. <br />
-                -
-                “Translating For Tech” trainer for Proz.com, world’s biggest
+                - Transcreated API-documentation from Chinese to English for
+                English-speaking developers. <br />
+                - Created marketing copies and documentation for CRM software
+                vendors and fintech products. <br />
+                - Published Christian Anderson Fairytales and Mary Karr's "The
+                Liars Club" in Chinese. <br />
+                - “Translating For Tech” trainer for Proz.com, world’s biggest
                 translators’ marketplace. <br />
                 <br />
-                <h2 className="text-center text-xl font-bold">~ Skills ~</h2> <br />
-                <h3 className="text-center font-bold">Test-driven Development</h3>
-                Either in actual test code or a big markdown file, I always
-                write down things that could go wrong with the code before I
-                start coding. Handling exceptions and testing are an often
-                overlooked part of software development, especially in an agile
-                environment when sometimes things need to go fast. However, good
-                software cannot survive long without a good test suite!
-                Currently, I am familiar with testing frameworks such as Jest,
-                Mocha, PyTest, and JUnit. <br /><br />
-                <h3 className="text-center font-bold">Formalities & Due Diligence</h3>
-                Formatting matters to me. Consistent naming conventions matter
-                to me. Committing everything to paper and keeping a record of
-                decision-making matter to me. These things might not seem
-                significant at the moment, but could ball up into head-splitting
-                complexities later. <br /><br />
-                <h3 className="text-center font-bold">Collaborate & Communicate</h3>I believe in
-                saying exactly what I mean while remaining civil & open. Years
-                of running my own business and doing customer support has helped
-                me hone the skills of simple, effective, and genuine
-                communication. Also, I enjoy collaboration and comraderie among
+                <h2 className="text-center text-xl font-bold">
+                  ~ Skills ~
+                </h2>{" "}
+                <br />
+                <h3 className="text-center font-bold">
+                  Abstraction and Cleanliness in Code
+                </h3>
+                I believe that all code should state abstract patterns rather
+                than perform a specific, contingent task. Unless I am 100% sure
+                something will only be done once or twice, ever, I don't
+                hardcode anything. Formatting and good naming conventions are
+                important to me, because they remove cognitive clutter and allow
+                me to focus on the crux of my tasks. <br />
+                <br />
+                <h3 className="text-center font-bold">
+                  Collaborate & Communicate
+                </h3>
+                I believe in saying exactly what I mean while remaining civil &
+                open. Years of running my own business and doing customer
+                support has helped me hone the skills of effective communication. My multicultural backgrounds give me an
+                insight into the true diversity of values, traditions, and
+                temperaments, and that have made me a patient, thoughtful
+                person. Also, I enjoy collaboration and comraderie among
                 collaborators. I never hold a narrow-minded competition mindset.
                 I love learning from others and helping others learn to the best
-                of my abilities. <br /><br />
-                <h3 className="text-center font-bold">Autonomy</h3>I am highly autonomous and good
-                at finding answers on my own. I can pick myself up to speed when
-                help is not too available.
+                of my abilities. <br />
+                <br />
+                <h3 className="text-center font-bold">Learn Continuously</h3>
+                Anybody who does not like endless learning probably will not be
+                happy as a software engineer! I love learning new technologies
+                and mental paradigms. Width of knowledge allows me the wisdom to
+                go deep properly in a specific technical domain.
                 <br />
                 <br />
                 <br />
                 <h2 className="text-center text-xl font-bold">~ Hobbies ~</h2>
-                <p>When I am not coding, I am spending time with my Son and reading
-                my Kindle.</p>
-                <br />I love cooking, salsa dancing, and learning foreign languages. <br />
-                <br />As a resident of Flushing, NY, I really love my neighborhood and have taken
-                countless walks around. I love observing the seasons changing and noticing recurring
-                characters in the neighborhood. 
+                <p>
+                  When I am not coding, I am spending time with my Son and
+                  reading my Kindle.
+                </p>
+                <br />I love cooking, salsa dancing, and learning foreign
+                languages. <br />
+                <br />
+                As a resident of Flushing, NY, I really love my neighborhood and
+                have taken countless walks around. I love observing the seasons
+                changing and noticing recurring characters in the neighborhood.
               </span>
             </div>
           </div>
