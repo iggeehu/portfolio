@@ -25,7 +25,7 @@ export default function Post({ postData }) {
       <Head>
         <title>{postData.title}</title>
       </Head>
-      <div className="px-48 py-4">
+      <div className="p-24 py-4">
       <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
       </div>
     </Layout>
