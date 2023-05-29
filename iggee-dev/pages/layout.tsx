@@ -16,7 +16,7 @@ type Props = {
 
 const Layout = ({ children, title = 'Tianci Hu Marrero' }: Props) => (
   <div className="w-full
-  h-full bg-white
+  h-full bg-silver-tree-100
   ">
     <Head>
       <title>{title}</title>

@@ -197,7 +197,7 @@ export default function Home() {
                 <br/>
                 Recurse Center is a
                 selective retreat for curious programmers to explore their
-                intellectual interests and collaborate. -<br />
+                intellectual interests and collaborate. <br />
                 - Wrote toy Assemblers &
                 Compilers, and Operating Systems. <br />
                 - Studied Censorship Resistant
@@ -215,7 +215,7 @@ export default function Home() {
                 software vendors and fintech products. <br />
                 - Published Christian
                 Anderson Fairytales and Mary Karr's "The Liars Club" in Chinese. <br />
-                - Any experience relevent to software development. -
+                -
                 “Translating For Tech” trainer for Proz.com, world’s biggest
                 translators’ marketplace. <br />
                 <br />

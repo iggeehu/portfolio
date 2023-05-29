@@ -1,6 +1,6 @@
 ---
 title: "Things I learned building my first data pipeline & crawler project"
-date: "3-5-2023"
+date: "2023-05-23"
 ---
 
 # Things I learned building my first data pipeline & crawler project

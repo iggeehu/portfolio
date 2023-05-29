@@ -5,8 +5,25 @@ import { redirect } from "next/dist/server/api-utils";
 import Link from "next/link";
 import Date from "../components/date";
 
+// interface Post {
+//     slug: string
+//     title: string
+//     date: string
+//     coverImage: string
+//     author: string
+//     excerpt: string
+//     ogImage: {
+//       url: string
+//     }
+//     content: string
+// }
+
+// type Props = {
+//   allPosts: Post[]
+// }
+
 export async function getStaticProps() {
-  const allPostsData = getSortedPostsData();
+  const allPostsData: any = getSortedPostsData();
   console.log(allPostsData);
   return {
     props: {
@@ -15,6 +32,7 @@ export async function getStaticProps() {
   };
 }
 
+//temporarily put any type on allPostsData
 export default function Home({ allPostsData }) {
   return (
     <div className="h-full bg-silver-tree-100">
@@ -32,16 +50,16 @@ export default function Home({ allPostsData }) {
                 Blogs
               </div>
               <ul className="notes-content basis-3/4 bg-silver-tree-200 font-blog rounded-xl">
-                {allPostsData.map((elem) => (
-                  <li className="p-2" key={elem.id}>
-                    <Link href={`/posts/${elem.id}`}>{elem.title}</Link>
+                {allPostsData.map(({ id, date, title }) => (
+                  <Link href={`/blogs/${id}`}>
+                  <li className="" key={id}>
+                    {title}
                     <br />
-                    <small className="">
-                      <Date dateString={elem.date} />
-                    </small>
+                    {id}
                     <br />
-                    <br />
+                    {date}
                   </li>
+                  </Link>
                 ))}
               </ul>
             </div>
