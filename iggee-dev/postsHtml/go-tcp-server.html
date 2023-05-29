@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <style>
+      </style>
+  </head>
+  <body>
+    <h1 class="text-xl font-bold">Learning G0 by writing a simple TCP server</h1>
+    
+    <p class="text-orange-400">Tianci Hu Marrero</a></p>
+    <p>2021-05-25</p>
+    <p>--</p>    <p>At the beginning of my batch at Recurse Center, I committed to joining the Censorship Resistance Study Group. As a network newbie whose only experience in TCP and networking in general is 3 hours of reading <a href="https://www.isi.edu/~hussain/TEACH/Spring2014/notes/Steven00a.pdf">TCP/IP Ilustrated</a>, I was excited by topics like Domain Fronting, Tor Relays, Quic, etc. However, I often struggled to visualize the implementation details of these strategies and got confused by <em>which pieces fit where</em>. To better understand these issues, I resolved to learn Go (a language well-suited for networking) and gain some hands-on experience in coding network-related programs.</p>
+    <br />
+    <p>I was introduced to <a href="https://protohackers.com/">Protohackers</a> by reading the blog of a study-group mate. Protohackers is a series of coding challenges that ramp up one’s understanding of networking protocols.</p>
+    <br />
+    <p>Yesterday, I started to tackle the first challenge: <a href="https://protohackers.com/problem/0">Smoke Test</a>. This test instructs you to write a TCP server that echos back whatever is being sent to it by a client. Although this is the 0-indexed warm-up problem of the series, I felt a bit lost when tackling this problem due to the following:</p>
+    <br />
+    <ol>
+      <li>1. I have spent a total of a few hours with Go, the programing language.</li>
+      <li>2. I am unaware of what level of abstraction the series expected.</li>
+      <li>3. The series wanted you to host your server on the cloud, so it can test it.</li>
+      <li>4. I do not know how I can test this server before putting it online.</li>
+    </ol>
+    <br />
+    <p>Luckily, I intuited that the problem itself is simple enough, so the “premeditation” of the algorithm is simple enough to leave mental space for juggling with syntax and unfamiliar library APIs. I tallied the resources I have for tackling this problem.</p>
+    <br />
+    <ol>
+      <li>1. I know that TCP is one step lower than HTTP. So I should probably not look at Go’s HTTP libraries.</li>
+      <li>2. I know buffers and I/Os will be used.</li>
+      <li>3. The internet will provide code samples for me to warm up to the syntax.</li>
+    </ol>
+    <br />
+    <p>The first step I took is to look for code samples. Admittedly, this is a bit of a cop-out just like using library APIs instead of implementing my own TCP-related methods. Since my main goal is to learn Go, I thought these concessions expedient.</p>
+    <br />
+    <p>So I went ahead thinking about what I will need to do in the code:</p>
+    <br />
+    <ol>
+      <li>1.Create a server object (very javascript-brained of me) by calling something like `.listen(PORT)`</li>
+      <li>2.Create a buffer in a forloop that reads from input, keep it in a data structure.</li>
+      <li>3.Write that data structure back to the client as a response</li>
+    </ol>
+    <br />
+    <p>The first step I took is looking at existing code samples from <a href="https://coderwall.com/p/wohavg/creating-a-simple-tcp-server-in-go">Coderwall</a>:</p>
+    <br />
+    <pre class="bg-silver-tree-300 text-sm"><code>package main
+
+import (
+ "fmt"
+ "io"
+ "os"
+
+ "log"
+
+ "net"
+)
+
+func main() {
+ arguments := os.Args
+ if len(arguments) == 1 {
+  fmt.Println("Please provide a port number!")
+  return
+ }
+
+ PORT := ":" + arguments\[1\]
+ l, err := net.Listen("tcp4", PORT)
+ if err != nil {
+  log.Fatal(err)
+ }
+ defer l.Close()
+
+ for {
+  c, err := l.Accept()
+  if err != nil {
+   fmt.Println(err)
+   return
+  }
+  go handleConnection(c)
+ }
+}
+
+func handleConnection(c net.Conn) {
+ fmt.Printf("Serving %s\\n", c.RemoteAddr().String())
+ packet := make(\[\]byte, 4096)
+ tmp := make(\[\]byte, 4096)
+ defer c.Close()
+ for {
+  \_, err := c.Read(tmp)
+  if err != nil {
+   if err != io.EOF {
+    fmt.Println("read error:", err)
+   }
+   println("END OF FILE")
+   break
+  }
+  packet = append(packet, tmp...)
+ }
+ num, \_ := c.Write(packet)
+ fmt.Printf("Wrote back %d bytes, the payload is %s\\n", num, string(packet))
+
+}
+</code></pre>
+    <p>A few things I gleaned from this code:</p>
+    <br />
+    <ol>
+      <li>1.`net.listen()` allows you to pass in connection type (TCP), IP and port. It returns a <a href="https://pkg.go.dev/net#pkg-functions">Listener</a>. Or our server.</li>
+      <li>2.Our listener can call an <code class="bg-silver-tree-300 text-sm">Accept</code>method to establishconnection, which, like in other languages, allows us to read and write.</li>
+      <li>3.The connection’s <code class="bg-silver-tree-300 text-sm">Read</code> and <code class="bg-silver-tree-300 text-sm">Write</code>methods takes in the container buffer (slice of bytes), and returns the number of bytes read.</li>
+    </ol>
+    <br />
+    <p>And some good Go syntax I’ve learned:</p>
+    <br />
+    <ol>
+      <li>1.The <code class="bg-silver-tree-300 text-sm">go</code> keyword starts an async process.</li>
+      <li>2.<code class="bg-silver-tree-300 text-sm">defer</code>allows one to move around a context-ending operation, so it is easier to spot for the eye.</li>
+    </ol>
+    <br />
+    <p>Note that this code handles payload in chunks of 1024 bytes. Protohacker’s requirement for this assignment is slightly different:</p>
+    <br />
+    <p><em>‘Once the client has finished sending data to you it shuts down its sending side. Once you’ve reached end-of-file on your receiving side, and sent back all the data you’ve received, close the socket so that the client knows you’ve finished.’</em></p>
+    <br />
+    <p>So my mental model for this assignment is like so:</p>
+    <br />
+    <ol>
+      <li>1.Take a <code class="bg-silver-tree-300 text-sm">packet</code>variable that stores all the buffers</li>
+      <li>2.Send packet back in one setting.</li>
+    </ol>
+    <br />
+    <p>And here is my code. In it, my handler waits until the read is finished and sends everything back in one setting:</p>
+    <br />
+    <pre class="bg-silver-tree-300 text-sm"><code>package main
+
+import (
+ "fmt"
+ "io"
+ "os"
+ "log"
+ "net"
+)
+
+func main() {
+ arguments := os.Args
+ if len(arguments) == 1 {
+  fmt.Println("Please provide a port number!")
+  return
+ }
+
+ PORT := ":" + arguments\[1\]
+ l, err := net.Listen("tcp4", PORT)
+ if err != nil {
+  log.Fatal(err)
+ }
+ defer l.Close()
+
+ for {
+  c, err := l.Accept()
+  if err != nil {
+   fmt.Println(err)
+   return
+  }
+  go handleConnection(c)
+ }
+}
+
+func handleConnection(c net.Conn) {
+ fmt.Printf("Serving %s\\n", c.RemoteAddr().String())
+ packet := make(\[\]byte, 4096)
+ tmp := make(\[\]byte, 4096)
+ defer c.Close()
+ for {
+  \_, err := c.Read(tmp)
+  if err != nil {
+   if err != io.EOF {
+    fmt.Println("read error:", err)
+   }
+   break
+  }
+  packet = append(packet, tmp...)
+ }
+  c.Write(packet)
+}
+</code></pre>
+<br />
+    <p>The only difference is I intend to send the packet in one go after the read reaches EOF. Does it make a difference? I don’t know. I don’t even know how EOF is defined in scenarios like this. But it is good to ‘rewrite’ code when you are just learning a language.</p>
+   <br />
+    <p>Now, how do I test this code? I decided to write a local client:</p>
+    <br />
+    <pre class="bg-silver-tree-300 text-sm"><code>package main
+
+import (
+ "io"
+ "net"
+ "os"
+)
+
+const (
+ HOST = "localhost"
+ PORT = "3333"
+ TYPE = "tcp"
+)
+
+func main() {
+ tcpServer, err := net.ResolveTCPAddr(TYPE, HOST+":"+PORT)
+ if err != nil {
+  println("ResolveTCPAddr failed:", err.Error())
+  os.Exit(1)
+ }
+
+ conn, err := net.DialTCP(TYPE, nil, tcpServer)
+ if err != nil {
+  println("Dial failed:", err.Error())
+  os.Exit(1)
+ }
+
+ defer conn.Close()
+
+ \_, err = conn.Write(\[\]byte("Ground Control To Major Tom"))
+ if err != nil {
+  println("Write data failed:", err.Error())
+  os.Exit(1)
+ }
+
+ // buffer to get data
+ received := make(\[\]byte, 4096)
+ for {
+  println("Reading data...")
+  temp := make(\[\]byte, 4096)
+  \_, err = conn.Read(temp)
+  if err != nil {
+   if err == io.EOF {
+    break
+   }
+   println("Read data failed:", err.Error())
+   os.Exit(1)
+  }
+  received = append(received, temp...)
+ }
+
+ println("Received message:", string(received))
+
+}
+</code></pre>
+    <p>After I wrote the client I became aware of the existence of <a href="https://netcat.sourceforge.net/">netcat</a> which could do what this code does in one line.</p>
+    <br />
+    <pre class="bg-silver-tree-300 text-sm"><code>echo -n “Ground Control For Major Tom” | nc localhost 3333
+</code></pre>
+    <p>But it was good getting the opportunity to learn about the client side API such as <code class="bg-pink-200 text-sm">dial</code> and <code class="bg-pink-200 text-sm">ResolveTCPAddr.</code></p>
+<br />    <p>After I ran the client, I was thrilled to know that the client and server acknowledged each other. (The left is the client, showing it has entered the read loop. And right side is the server, acknowledging it’s connected to my client).</p>
+<br />      <p>However, it seems like both my server and my client are stuck in their respective read loops. My server never reaches the line that prints “Wrote back _ bytes, the payload is _”. And my client side never reaches “Received message: _”.</p>
+<br />      <p>I control-c-ed my client, and my server finished executing:</p>
+<br />      <p>Yay! Now I am sure that the problem is not “server can’t read”, but “server can’t reach c.Write() to send back the payload, due to being stuck at read loop”. I go back to look at the problem code:</p>
+<br />      <pre class="bg-silver-tree-300 text-sm"><code>for {
+  \_, err := c.Read(tmp)
+  if err != nil {
+   if err != io.EOF {
+    fmt.Println("read error:", err)
+   }
+   println("END OF FILE")
+   break
+  }
+  packet = append(packet, tmp...)
+ }
+</code></pre>
+    <p>It is highly likely that the server has not received the “EOF” signal from the client. And my ctrl-c-ing the client, ergo, cutting off the connection, achieved the “EOF” effect.</p>
+    <br />  <p>So now I found the central question: “How does my client tell the server it’s done?” Two possibilities abound:</p>
+    <br />  <ol>
+      <li>1. Cutting off connection by doing <code>conn.Close()</code></li>
+      <li>2. A special trick, like an identifier in the payload or a method.</li>
+    </ol>
+    <br />  <p>I went about testing the first hypothesis. I am heavily skeptical that this is the solution because terminating connection to signal end of I/O sounds horrible. If this is the only way to do so, then maybe TCP has a big problem! Luckily, intellisense proved useful when I tried to add <code class="bg-silver-tree-300 text-sm">conn.Close()</code>after my client’s message by reminding me that there is a method called <code>conn.CloseWrite()</code>. The name is expressive enough that I knew immediately that this is the solution. So I added one line containing <code class="bg-silver-tree-300 text-sm">conn.CloseWrite()</code> to my client code:</p>
+    <pre class="bg-silver-tree-300 text-sm"><code>package main
+
+import (
+ "io"
+ "net"
+ "os"
+)
+
+const (
+ HOST = "localhost"
+ PORT = "3333"
+ TYPE = "tcp"
+)
+
+func main() {
+ tcpServer, err := net.ResolveTCPAddr(TYPE, HOST+":"+PORT)
+ if err != nil {
+  println("ResolveTCPAddr failed:", err.Error())
+  os.Exit(1)
+ }
+
+ conn, err := net.DialTCP(TYPE, nil, tcpServer)
+ if err != nil {
+  println("Dial failed:", err.Error())
+  os.Exit(1)
+ }
+
+ defer conn.Close()
+
+ \_, err = conn.Write(\[\]byte("Ground Control To Major Tom"))
+ if err != nil {
+  println("Write data failed:", err.Error())
+  os.Exit(1)
+ }
+
+ //new line of code
+ conn.CloseWrite()
+
+ received := make(\[\]byte, 4096)
+ for {
+  println("Reading data...")
+  temp := make(\[\]byte, 4096)
+  \_, err = conn.Read(temp)
+  if err != nil {
+   if err == io.EOF {
+    break
+   }
+   println("Read data failed:", err.Error())
+   os.Exit(1)
+  }
+  received = append(received, temp...)
+ }
+
+ println("Received message:", string(received))
+
+}
+
+</code></pre>
+    <p>And voila, my server got the message from the client, and the client received its own message back:</p>
+    <br />  <p>What a great day, learning a lot about Go and putting something together that originally seemed out of my depth!</p>
+    <br />   <p>The next step is to take my server online. And I am ready for the challenge!</p>
+  </body>
+</html>

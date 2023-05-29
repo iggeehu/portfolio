@@ -45,8 +45,13 @@ export default function Home({ allPostsData }) {
         <Layout>
           <section className="">
             <div className=" flex flex-cols p-10">
-              <div className="notes-date basis-1/4 bg-silver-tree-200 h-96 rounded">
-                (This page is still under construction, check back periodically!)
+              <div className="notes-date basis-1/4 bg-silver-tree-200 h-96 rounded m-auto">
+                <div className="py-2 px-2">
+                <img src="https://miro.medium.com/v2/resize:fill:88:88/1*Odrk7Jy6oAm7HfQyBq92hA.png" alt="Tianci Hu Marrero"></img>
+                
+                <p><a href="https://medium.com/@iggeehu?source=post_page-----e4b26704395a--------------------------------">Tianci Hu Marrero</a></p>
+                </div>
+               
               </div>
               <ul className="notes-content basis-3/4 bg-silver-tree-200 font-blog rounded-xl p-5">
                 {allPostsData.map(({ id, date, title, keywords }) => (

@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+
+  <body>
+    <h1 class="text-xl font-bold">Speed-running OS-day 1: Basics</h1>
+    <p class="text-orange-400">Tianci Hu Marrero</a></p>
+    <p>2021-05-25</p>
+    <p>--</p>
+    <br /><p>My materials: Stanford CS140 (no videos, only slides) and <a href="https://pages.cs.wisc.edu/~remzi/OSTEP/">‘Operating Systems, Three Easy Pieces’</a> which is free online.</p>
+    <br /><p><strong>TASKS OF AN OPERATING SYSTEM</strong></p>
+    <ol>
+      <li>
+        <p>1. Control — How to maintain control of the resource (CPU) while giving processes ‘admin powers’ such as read and write from disk.</p>
+      </li>
+      <li>
+        <p>2. Protection — How to prevent user (or process) from accessing and clobbering (overwriting) other processes’ memory space. Hint: through CPU virtualization via <a href="https://www.ibm.com/docs/en/zos-basic-skills?topic=storage-what-is-address-space">address space</a>.</p>
+      </li>
+      <li>
+        ><p>3. Scheduling — How to maximize CPU usage with different techniques, like preemptive/non-preemptive. Scheduling must balance the following goals: fairness, priority, deadlines, throughput, efficiency. With effective scheduling, a single core CPU can create the illusion of executing many processes at once.</p>
+      </li>
+    </ol>
+    <br /><p><strong>KEY CONCEPTS:</strong></p>
+    <ol>
+      <li><strong>1. OS Kernel</strong>: A computer program that allocates hardware resources to processes and oversees process behaviors. The ‘cockpit’. A layer between hardware and processes. It offers a systems call interface for use by the processes. Fun fact: the oldest operating systems are nothing but a <em>standard library.</em> In other words, it does nothing but offers itself up for use by processes and the scheduling/control aspects have to be done by humans.</li>
+      <li><strong>2. Process</strong>: an instance of a running program. Data structures that represent processes: proc in Unix, task<em>struct in Linux, struct thread in Pintos. These data structures need to contain all the info the process requires to run, such as open files, registers, credentials, priority, process state(running, ready, or blocked), process ID, address space. A process is created via fork() and executed via exec() (These two functions behave with some intricacies that are worth exploring, see p35 of **_Three Easy Pieces</em>** book). Here is an example of a process data structure:</li>
+    </ol>
+    <br /><p>This is from the CS140 lecture slide.</p>
+    <br /><p><strong>3. File descriptor</strong>: an ID that identifies a file. In implementation, it represents a stream into or out from a file. For example, the open() procedure call returns a file descriptor. File descriptors are integers. 0, 1, 2 are reserved for standard input (stdin), standard output(stdout), and standard error(stderr).</p>
+    <br /><p><strong>4. System call</strong>: Special functions called by the process that requests ‘privileged functionalities’ outside of the process’ jurisdiction. A process’ request to use OS functionalities such as read/write (e.g open() is actually a system call), printf, or fork. The process makes a system call by executing a <strong>trap</strong> instruction. The OS relinquishes control and then regains control through a <strong>return-from-trap</strong> instruction. The trap instruction is implemented underneath all the system call funcs.</p>
+    <br /><p><strong>5. Call stack:</strong> A last-in-first-out data structure that helps a process remember where to return to (implementation: a return address that points to the memory where the function can pick up right where it started) after running a child function. A stack is like a stack of laundry — the clothes on top (put there last) get picked up first. When a routine is being run and about to start a subroutine, the current line of execution in the routine is ‘pushed’ to the stack. Once the subroutine is finished, the stack ‘pop’ (or remove) the last remembered line, so it can pick up where it started.</p>
+    <br /><p>6. <a href="https://www.tutorialspoint.com/assembly_programming/assembly_registers.htm"><strong>Registers</strong></a><strong>:</strong> Think of this as a super-RAM that is much faster than memory. Registers are memory slots that can store data for processing. A process data structure typically contains registers. In assembly language, the registers are represented conventionally by EAX, EBX, ECX, EDX, which are 32-bit, and AX, BX, CX, DX, which are 16-bit, and AH, AL, BH, BL, CH, CL, DH, and DL, which are 8-bit, etc.</p>
+    <br /><p>7. <strong>Pre-emption</strong>: CPU’s interference of processes for scheduling/efficiency. Instead of letting a process finish, sometimes the CPU intervenes to determine whether the current process should continue or another process should be in its stead. This is usually done with an interrupt timer. When the timer runs out, the CPU checks in and makes a decision. Non-preemptive scheduling, on the other hand, looks like this: once the CPU is given to a process, the process gets to run its course and terminates before another process is put on queue.</p>
+    <br /><p>8. <strong>CPU virtualization</strong>: Another way of saying ‘OS doing its job’, which is transforming hardware into software. In other words, interpreting a physical resource into a virtual form. An OS is sometimes called a virtual machine.</p>
+    <br /><p>9. <strong>Memory virtualization (address space):</strong> The OS does this to protect its memory. It translates physical memory into private address spaces. Private address space is a chunk of memory alloted by the OS to a process at the start of the process. Via virtualization, the process can only access its own address space. It has no way of overreaching into other processes’ memory by manipulating physical memory.</p>
+    <br /><p>10. <strong>Context switching</strong>: the CPU going from executing one process to executing another process.</p>
+  </body>
+</html>

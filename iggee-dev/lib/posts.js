@@ -44,9 +44,20 @@ export function getSortedPostsData() {
 export async function getPostData(id) {
     const fullPath = path.join(postsDirectory, `${id}.md`);
     const fileContents = fs.readFileSync(fullPath, 'utf8');
- 
     const matterResult = matter(fileContents);
  
+    //find postsHTML directory, if such a file exists, read from such file
+    const postsHtmlDirectory = path.join(process.cwd(), 'postsHtml');
+    const htmlPath = path.join(postsHtmlDirectory, `${id}.html`);
+    if (fs.existsSync(htmlPath)) {
+      const htmlContents = fs.readFileSync(htmlPath, 'utf8');
+      return {
+        id,
+        contentHtml: htmlContents,
+        ...matterResult.data,
+      };
+    }//if not, create html file with remark, write to html dir, and return newly generated html
+    else{
     const processedContent = await unified()
     .use(remarkParse)
     .use(remarkToc)
@@ -56,14 +67,26 @@ export async function getPostData(id) {
     .use(rehypeStringify)
       .process(matterResult.content);
     const contentHtml = processedContent.toString();
-  
-    // Combine the data with the id and contentHtml
+    fs.writeFile(`./postsHtml/${id}.html`, contentHtml, function (err) {});
+    //
     return {
       id,
       contentHtml,
       ...matterResult.data,
-    };
+    };}
   }
+
+  export async function mdToHtml(id) {
+    
+  }
+
+  export async function writeHtmlFile(id) {
+    const htmlContent = await getPostData(id).contentHtml
+    fs.writeFile(`./postsHtml/${id}.md`, htmlContent, function (err) { 
+      console.error(err);})
+  }
+
+
   
   export function getAllPostIds() {
     const fileNames = fs.readdirSync(postsDirectory);

@@ -1,6 +1,5 @@
 import Layout from "../layout";
 import { getAllPostIds, getPostData } from "../../lib/posts";
-import Date from '../../components/date';
 import Head from 'next/head';
 
 export async function getStaticProps({ params }) {
@@ -26,9 +25,9 @@ export default function Post({ postData }) {
       <Head>
         <title>{postData.title}</title>
       </Head>
-      <div className="py-3 px-20">
-  
-      <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} /></div>
+      <div className="px-48 py-4">
+      <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
+      </div>
     </Layout>
   );
 }
