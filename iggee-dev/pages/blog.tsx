@@ -50,6 +50,7 @@ export default function Home({ allPostsData }) {
                 <img src="https://miro.medium.com/v2/resize:fill:88:88/1*Odrk7Jy6oAm7HfQyBq92hA.png" alt="Tianci Hu Marrero"></img>
                 
                 <p><a href="https://medium.com/@iggeehu?source=post_page-----e4b26704395a--------------------------------">Tianci Hu Marrero</a></p>
+                This page is still under construction
                 </div>
                
               </div>
@@ -57,9 +58,8 @@ export default function Home({ allPostsData }) {
                 {allPostsData.map(({ id, date, title, keywords }) => (
                   <li className="" key={id}>
                     <div>
-                    <Link href={`/blogs/${id}`}>{title}</Link>
-                      <br />
-                      <div className="text-sm text-current text-orange-400">{keywords}</div>
+                    <Link href={`/blogs/${id}`}><p className="text-md text-silver-tre-800">{title}</p></Link>
+                      <div className="text-sm text-current text-silver-tree-500">{keywords}</div>
                       <div className="text-sm">{date}</div>
                     </div>
                     <br />

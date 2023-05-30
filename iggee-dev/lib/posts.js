@@ -46,46 +46,34 @@ export async function getPostData(id) {
     const fileContents = fs.readFileSync(fullPath, 'utf8');
     const matterResult = matter(fileContents);
  
-    //find postsHTML directory, if such a file exists, read from such file
-    const postsHtmlDirectory = path.join(process.cwd(), 'postsHtml');
-    const htmlPath = path.join(postsHtmlDirectory, `${id}.html`);
-    if (fs.existsSync(htmlPath)) {
-      const htmlContents = fs.readFileSync(htmlPath, 'utf8');
-      return {
-        id,
-        contentHtml: htmlContents,
-        ...matterResult.data,
-      };
-    }//if not, create html file with remark, write to html dir, and return newly generated html
-    else{
-    const processedContent = await unified()
-    .use(remarkParse)
-    .use(remarkToc)
-    .use(remarkRehype)
-    .use(rehypeDocument, {title: 'Contents'})
-    .use(rehypeFormat)
-    .use(rehypeStringify)
-      .process(matterResult.content);
-    const contentHtml = processedContent.toString();
-    fs.writeFile(`./postsHtml/${id}.html`, contentHtml, function (err) {});
-    //
-    return {
-      id,
-      contentHtml,
-      ...matterResult.data,
-    };}
-  }
+   //find postsHTML directory, if such a file exists, read from such file for rendering posts/[id]
+   const postsHtmlDirectory = path.join(process.cwd(), 'postsHtml');
+   const htmlPath = path.join(postsHtmlDirectory, `${id}.html`);
+   var contentHtml;
+   if (fs.existsSync(htmlPath)) {
+      contentHtml = fs.readFileSync(htmlPath, 'utf8');
+   }//if not, create html file with remark, write to html dir, and return newly generated html
+   else{
+   const processedContent = await unified()
+   .use(remarkParse)
+   .use(remarkToc)
+   .use(remarkRehype)
+   .use(rehypeDocument, {title: 'Contents'})
+   .use(rehypeFormat)
+   .use(rehypeStringify)
+     .process(matterResult.content);
+    contentHtml = processedContent.toString();
+   fs.writeFile(`./postsHtml/${id}.html`, contentHtml, function (err) {})
+   }
+   return {
+     id,
+     contentHtml,
+     ...matterResult.data,
+   }
+ }
 
-  export async function mdToHtml(id) {
-    
-  }
 
-  export async function writeHtmlFile(id) {
-    const htmlContent = await getPostData(id).contentHtml
-    fs.writeFile(`./postsHtml/${id}.md`, htmlContent, function (err) { 
-      console.error(err);})
-  }
-
+  
 
   
   export function getAllPostIds() {

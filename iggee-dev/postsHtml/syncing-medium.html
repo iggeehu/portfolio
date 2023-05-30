@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Contents</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <h1 class="text-xl font-bold">Syncing Medium posts on NextJS site: an imperfect approach</h1>
+    <p class="text-orange-400">Tianci Hu Marrero</a></p>
+    <p>2021-05-30</p>
+    <p>--</p>
+
+    <p>A few months ago, I decided to do my portfolio site in NextJS. Unluckily, I did not think I would add a blog section at the time, and rendering blogs of any other format on the site has just been a pain. (I even tried writing blogs in html, but the finger overhead of formatting in html just dampened my desire to write. This cannot be!) To make matters worse, I store all my blogs on Medium, and migrating them involved many steps:</p>
+    <br><h2 class="text-l font-bold"> MEDIUM TO BLOG WORKFLOW</h2>
+    <ol>
+      <li>1.Convert medium posts to markdown files stored in my current working directory.</li>
+      <li>2.Convert markdown file to html.</li>
+      <li>3.Dynamically render the html fetched by referencing the url slug, which represents the id field of the markdown file’s YML metadata.</li>
+      <li>4.Standardize the html to my blogging style sheet, built on tailwindCSS.</li>
+    </ol><br>
+    <p>And some might say, why not just convert medium directly to html? This is because I would potentially want to write my blogs natively instead of publishing them on Medium first. So a future workflow would look like this:</p>
+    <br><h2 class="text-l font-bold">NATIVE MARKDOWN TO SITE BLOG WORKFLOW</h2>
+    <ol>
+      <li>1.Write blog into markdown file, stored in my /posts directory.</li>
+      <li>2.My site reads into my /posts directory and list the articles at /posts at every render. If a html file at the /postsHtml directory exists, then render that in posts/[id]. If not, automatically generate the html and render it, even if it’s imperfect and unformatted.</li>
+      <li>3.If html file at /postsHtml is not formatted, go manually format it to conform to styling standards.</li>
+    </ol>
+    <br><p>Now, the final workflow described in this post will build on top of an existing solution, which exists in NextJS official site’s tutorial page. If you are familiar with NextJS already, you should start at the <a href="https://nextjs.org/learn/basics/data-fetching/blog-data">“Blog Data” section of “Pre-rendering and Data Fetching” chapter</a>. The tutorial will show you how to:</p>
+    <br><ol>
+      <li>1.Fetch blog metadata from a directory of markdown files with YML metadata headers. Each markdown file represents a blog post.</li>
+      <li>2.Trigger creation of markdown-to-html conversion (by using remarkHtml, a JS library), include the html as part of the blog object.</li>
+      <li>3.The html, fresh from remarkHtml oven, gets rendered at posts/[id].</li>
+    </ol>
+    <br><p>Though the solution offered by nextJS’ official documentation offered me thearchitecture in which to render my blog, it has the lethal flaw of getting converted html files directly onto the page. I found that the converted html file has trouble with recognizing line breaks (I used spaces, backslashes, and nothing worked consistently). Additionally, there does not seem to be a way to pass in style attributes to the rendered html if your project uses TailwindCSS. This means that I need to stagger the process and render the html files in my directory, so I can go in and tweak them before actual publication.</p>
+    <br><p>So, this is my posts.js file, which is based on the next.js documentation:</p>
+    <br><pre class="bg-silver-tree-300 text-sm"><code>  
+import fs from 'fs';  
+import path from 'path';  
+import matter from 'gray-matter';  
+import { remark } from 'remark';  
+import html from 'remark-html';  
+import {unified} from 'unified'  
+import remarkParse from 'remark-parse'  
+import remarkHtml from 'remark-html'  
+import remarkToc from 'remark-toc'  
+import remarkRehype from 'remark-rehype'  
+import rehypeDocument from 'rehype-document'  
+import rehypeFormat from 'rehype-format'  
+import rehypeStringify from 'rehype-stringify'  
+  
+const postsDirectory = path.join(process.cwd(), 'posts');  
+  
+//for rendering /posts url for a list of posts  
+export function getSortedPostsData() {  
+  
+  const fileNames = fs.readdirSync(postsDirectory);  
+  const allPostsData = fileNames.map((fileName) => {  
+    //peek into /posts directory in my current working directory  
+    const id = fileName.replace(/\\.md$/, '');  
+    const fullPath = path.join(postsDirectory, fileName);  
+    const fileContents = fs.readFileSync(fullPath, 'utf8');  
+    //fetch the yml metadata from within the markdown files  
+    const matterResult = matter(fileContents);  
+  
+    return {  
+      id,  
+      ...matterResult.data,  
+    };  
+  });  
+  // Sort posts by date  
+  return allPostsData.sort((a, b) => {  
+    if (a.date &#x3C; b.date) {  
+      return 1;  
+    } else {  
+      return -1;  
+    }  
+  });  
+}  
+  
+//for rendering /posts url for a list of posts  
+export async function getPostData(id) {  
+    const fullPath = path.join(postsDirectory, \`${id}.md\`);  
+    const fileContents = fs.readFileSync(fullPath, 'utf8');  
+    const matterResult = matter(fileContents);  
+    let contentHtml;
+    
+    //find postsHTML directory, if such a file exists, read from such file for rendering posts/\[id\]  
+    const postsHtmlDirectory = path.join(process.cwd(), 'postsHtml');  
+    const htmlPath = path.join(postsHtmlDirectory, \`${id}.html\`);  
+    if (fs.existsSync(htmlPath)) {  
+      contentHtml = fs.readFileSync(htmlPath, 'utf8');  
+    }//if not, create html file with remark, write to html dir, and return newly generated html  
+    else{  
+    const processedContent = await unified()  
+    .use(remarkParse)  
+    .use(remarkToc)  
+    .use(remarkRehype)  
+    .use(rehypeDocument, {title: 'Contents'})  
+    .use(rehypeFormat)  
+    .use(rehypeStringify)  
+      .process(matterResult.content);  
+    contentHtml = processedContent.toString();  
+    fs.writeFile(\`./postsHtml/${id}.html\`, contentHtml, function (err) {})  
+    }  
+    return {  
+      id,  
+      contentHtml,  
+      ...matterResult.data,  
+    }  
+  }  
+  
+  
+  
+    
+  export function getAllPostIds() {  
+    const fileNames = fs.readdirSync(postsDirectory);  
+    
+    return fileNames.map((fileName) => {  
+      return {  
+        params: {  
+          id: fileName.replace(/\\.md$/, ''),  
+        },  
+      };  
+    });  
+  }  
+    
+  export async function getStaticPaths() {  
+    const paths = getAllPostIds();  
+    return {  
+      paths,  
+      fallback: false,  
+    };  
+  }
+</code></pre><br>
+<br><p>By doing the if/else clause in the <code>getPostData</code> function, I can have a “staggered space” (the /postsHtml directory) where I can tweak the styling of the generated html file with Tailwind.</p>
+<br><p>So now workflow looks at this:</p>
+<br><ol>
+      <li>1.Convert md file from medium (using the <a href="https://github.com/dtesler/medium-to-markdown">medium-to-markdown</a> tool) or create one natively, put it under the /posts directory in my current working directory.</li>
+      <li>2.My /posts url now shows title, id, date of my new blog post.</li>
+      <li>3.My /posts/[id] shows the new blog, unformatted and wacky with linebreaks.</li>
+      <li>4.I go into the postsHtml/ directory and edit the auto-generated html file for style.</li>
+      <li>5.Now the formatted html shows on my blog.</li>
+    </ol>
+    <br><p>Not perfect, but much better than all the other alternative! And to add a bit more detail on how I convert medium posts into md files, I npm-installed the “medium-to-markdown” package by running <code>npm install medium-to-markdown</code> . And I wrote the following script called <code>mediumConverter.js:</code></p>
+    <br><pre class="bg-silver-tree-300 text-sm"><code>const mediumToMarkdown = require('medium-to-markdown');  
+const fs = require('fs');  
+  
+if (process.argv.length === 2) {  
+    console.error('Expected at least one argument!');  
+    process.exit(1);  
+  }  
+    
+// Enter url here  
+mediumToMarkdown.convertFromUrl(process.argv\[2\])  
+.then((markdown) =>   
+  fs.writeFile('./posts/output.md', markdown, function (err) {   
+  console.error(err);})  
+);
+</code></pre>
+<br><p>And every time I want to sync my medium post on my site, I just run <code class="bg-silver-tree-300 text-sm">node mediumConverter.js [medium-post-url]</code></p>
+<br><p>Another thing I can do is write a script that parses the autogenerated, wacky html, adds tailwind styling based on tag name such as and as well as if a line break is missing. But that’s for another day!</p>
+  </body>
+</html>
