@@ -23,7 +23,7 @@ import Date from "../components/date";
 // }
 
 export async function getStaticProps() {
-  const allPostsData: any = getSortedPostsData();
+  const allPostsData: any = await getSortedPostsData();
   return {
     props: {
       allPostsData,
@@ -31,7 +31,7 @@ export async function getStaticProps() {
   };
 }
 
-//temporarily put any type on allPostsData
+
 export default function Home({ allPostsData }) {
   return (
     <div className="h-full bg-silver-tree-100">

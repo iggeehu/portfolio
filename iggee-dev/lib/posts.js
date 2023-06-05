@@ -14,13 +14,14 @@ import rehypeStringify from 'rehype-stringify'
 
 const postsDirectory = path.join(process.cwd(), 'posts');
 
-export function getSortedPostsData() {
+export async function getSortedPostsData() {
 
   const fileNames = fs.readdirSync(postsDirectory);
   const allPostsData = fileNames.map((fileName) => {
     // Remove ".md" from file name to get id
     const id = fileName.replace(/\.md$/, '');
-
+    getPostData(id)
+    console.log(fileName)
     const fullPath = path.join(postsDirectory, fileName);
     const fileContents = fs.readFileSync(fullPath, 'utf8');
 
@@ -39,6 +40,18 @@ export function getSortedPostsData() {
       return -1;
     }
   });
+  // const fileNames = fs.readdirSync(postsDirectory);
+  // const allPostsData=fileNames.map(async fileName=>{
+  //   let id=fileName.replace(/\.md$/, '')
+  //   return await getPostData(id)
+  // })
+  // return allPostsData.map(allPosts=> allPosts.sort((a, b) => {
+  //     if (a.date < b.date) {
+  //       return 1;
+  //     } else {
+  //       return -1;
+  //     }
+  // }))
 }
 
 export async function getPostData(id) {
@@ -54,6 +67,7 @@ export async function getPostData(id) {
       contentHtml = fs.readFileSync(htmlPath, 'utf8');
    }//if not, create html file with remark, write to html dir, and return newly generated html
    else{
+   console.log("No html file exist")
    const processedContent = await unified()
    .use(remarkParse)
    .use(remarkToc)

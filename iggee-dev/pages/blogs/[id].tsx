@@ -26,7 +26,7 @@ export default function Post({ postData }) {
         <title>{postData.title}</title>
       </Head>
       <div className="p-24 py-4">
-      <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
+      <div className="font-blog" dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
       </div>
     </Layout>
   );
