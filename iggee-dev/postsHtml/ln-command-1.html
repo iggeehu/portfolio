@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Contents</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <h1 class="text-xl font-bold">
+      What the hell is inside the ln command 1/2
+    </h1>
+    <p class="text-orange-400">Tianci Hu Marrero</p>
+    <p>2021-06-16</p>
+    <p>--</p>
+    <p>
+      I have a bad habit that I occasionally indulge in, which makes it very
+      hard for me to finish any books: going into rabbit holes. Recently, I was
+      reading the book “Understanding The Linux Kernel”, and was caught up in
+      the “Hard and Soft Link” section on page 14. Obviously, the rabbit hole
+      happened before I went very far. On the page is the following text:
+    </p>
+    <br />
+    <pre class="bg-silver-tree-300 text-sm"><code>The Unix command:
+$ ln p1 p2
+is used to create a new hard link that has the pathname p2
+for a file identified by the pathname p1.
+
+Hard links have two limitations:
+\- It is not possible to create hard links for directories.
+Doing so might transform the directory tree into a graph with
+cycles, thus making it impossible to locate a file according to
+its name.
+</code></pre>
+    <br />
+    <p>
+      A self-referential directory going in an infinite loop? I had the
+      curiosity to look into the
+      <code class="bg-silver-tree-300 text-sm">ln.c</code> source code in the
+      <a href="https://github.com/coreutils/coreutil">coreutils</a> library.
+    </p>
+    <br />
+    <p>
+      After 5 minutes of reading the code and perspiring generously, I decided
+      maybe it’s wise to look at the manpage for ln first. After all, it’s
+      better to know what something is supposed to do, before looking at how it
+      is done.
+    </p>
+    <br />
+    <p>
+      Below is the elegant explanation of the
+      <code class="bg-silver-tree-300 text-sm">ln</code> command:
+    </p>
+    <br />
+    <pre class="bg-silver-tree-300 text-sm"><code>SYNOPSIS
+ ln \[OPTION\]… \[-T\] TARGET LINK\_NAME
+ ln \[OPTION\]… TARGET
+ ln \[OPTION\]… TARGET… DIRECTORY
+ ln \[OPTION\]… -t DIRECTORY TARGET…
+
+DESCRIPTION
+ In the 1st form, create a link to TARGET with the name
+ LINK\_NAME. In the 2nd form, create a link to TARGET in the
+ current directory. In the 3rd and 4th forms, create links
+ to each TARGET in DIRECTORY. Create hard links by default,
+ symbolic links with - symbolic. By default, each destina‐
+ tion (name of new link) should not already exist. When cre‐
+ ating hard links, each TARGET must exist. Symbolic links
+ can hold arbitrary text; if later resolved, a relative link
+ is interpreted in relation to its parent directory.
+</code></pre>
+    <br />
+    <p>I tried out the first form like so:</p>
+    <br /><br />
+    <img
+      src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*r5IGwi2sBZ-dKGTFawfE7w.png"
+    />
+    <br /><br />
+    <p>
+      I created two files in my Downloads/BOOK directory,
+      <code class="bg-silver-tree-300 text-sm">file 1</code> and
+      <code class="bg-silver-tree-300 text-sm">file 2</code>. I created file1 to
+      be <code class="bg-silver-tree-300 text-sm">TARGET</code> and file2 to be
+      <code class="bg-silver-tree-300 text-sm">LINK_NAME</code>. I thought that
+      I needed to create
+      <code class="bg-silver-tree-300 text-sm">LINK_NAME</code> before mapping
+      <code class="bg-silver-tree-300 text-sm">TARGET</code> as its destination.
+      And when I tried
+      <code class="bg-silver-tree-300 text-sm">ln file1 file2</code>, I was told
+      “failed to create hard link ‘file2’: File exists”, which means, “Hey, this
+      name file2 is taken, come up with a new link name!”
+    </p>
+    <br />
+    <p>
+      Ok, ok. I wrote ‘ln file1 file3", and assumed that this command will
+      create a new file, file3. I peeked into file3. And nicely, it gives me the
+      same content as file1. We created a portal into file1.
+    </p>
+    <br />
+    <p>
+      Now my question is: are file1 and file3 the same kind of files? Is file3 a
+      special kind of secondary pointers to file1, the ‘original’, or are both
+      files of exactly the same kind, but separate portals into the same content
+      on disk? What is the data structure of a “hard link”? Are all ordinary
+      files just hard links? I had a little exposure to the idea of fd (file
+      descriptors) and inode. But I don’t quite fit all the knowledge together.
+      Here is what I know:
+    </p>
+    <br />
+    <ul>
+      <li>A file is a sequence of bytes.</li>
+      <li>
+        An inode is a data structure kept by the file system to describe a file.
+        The inode contains information such as file type, file length, device
+        types, etc.
+      </li>
+      <li>A file descriptor is a unique identifier to an open file.</li>
+    </ul>
+    <p>
+      I decided to overlook the more complex ways this command can be used, and
+      went on a hunt for the answer for my specific command
+      <code class="bg-silver-tree-300 text-sm">ln file1 file3</code> in the
+      source code.
+    </p>
+    <br />
+    <p>
+      Since the source code will surely encompass all the options. And I am only
+      inquiring form 1 of the command:
+    </p>
+    <br />
+    <pre class="bg-silver-tree-300 text-sm"><code>
+ln \[OPTION\]… \[-T\] TARGET LINK\_NAME (create a link of LINK\_NAME of TARGET, put it in current directory)
+</code></pre>
+    <br />
+    <p>
+      I need to narrow down what to look for in the source code. First, I should
+      seek the <code class="bg-silver-tree-300 text-sm">-T</code> block, which,
+      according to the manpage, means “no target directory”.
+    </p>
+    <br />
+    <pre
+      class="bg-silver-tree-300 text-sm"
+    ><code> -t, --target-directory=DIRECTORY
+              specify the DIRECTORY in which to create the links
+
+       -T, --no-target-directory
+              treat LINK\_NAME as a normal file always
+</code></pre>
+    <br />
+    <p>
+      Looking down the <code class="bg-silver-tree-300 text-sm">main()</code> of
+      <code class="bg-silver-tree-300 text-sm">ln.c</code>, I found what I am
+      looking for:
+    </p>
+    <br />
+    <pre class="bg-silver-tree-300 text-sm"><code>
+int
+main (int argc, char \*\*argv)
+{
+   //parsing all the options, throwing errors
+   //on non-legit args, basically busywork stuff
+   ...
+
+    if (n\_files == 2 &#x26;&#x26; !target\_directory)
+        link\_errno = atomic\_link (file\[0\], AT\_FDCWD, file\[1\]);
+
+      if (link\_errno &#x3C; 0 || link\_errno == EEXIST || link\_errno == ENOTDIR
+          || link\_errno == EINVAL)
+        {
+          ...
+        }
+    }
+
+}
+</code></pre>
+    <br />
+    <p>
+      So it seems like the operation is done by the
+      <code class="bg-silver-tree-300 text-sm">atomic_link</code> function, and
+      immediately after, we are doing operations based on the result,
+      <code class="bg-silver-tree-300 text-sm">link_errno</code>. Now let’s peek
+      into <code class="bg-silver-tree-300 text-sm">atomic_link</code>:
+    </p>
+    <br />
+    <pre class="bg-silver-tree-300 text-sm"><code>
+/\* Link SOURCE to DESTDIR\_FD + DEST\_BASE atomically.  DESTDIR\_FD is
+   the directory containing DEST\_BASE.  Return 0 if successful, a
+   positive errno value on failure, and -1 if an atomic link cannot be
+   done.  This handles the common case where the destination does not
+   already exist and -r is not specified.  \*/
+
+static int
+atomic\_link (char const \*source, int destdir\_fd, char const \*dest\_base)
+{
+  return (symbolic\_link
+          ? (relative ? -1
+             : errnoize (symlinkat (source, destdir\_fd, dest\_base)))
+          : beware\_hard\_dir\_link ? -1
+          : errnoize (linkat (AT\_FDCWD, source, destdir\_fd, dest\_base,
+                              logical ? AT\_SYMLINK\_FOLLOW : 0)));
+}
+</code></pre>
+    <br />
+    <p>
+      First of all, I am sure whoever wrote this nested conditional operator
+      probably had a lot of fun.
+    </p>
+    <br />
+    <p>
+      Second of all, my first file, file1, or
+      <code class="bg-silver-tree-300 text-sm">TARGET</code>, is passed as
+      <code class="bg-silver-tree-300 text-sm">source</code>.
+      <code class="bg-silver-tree-300 text-sm">AT_FDCWD</code> has “FD” (file
+      descriptor) and “CWD” (current working directory), it’s safe to assume int
+      <code class="bg-silver-tree-300 text-sm">AT_FDCWD</code>, passed in as
+      <code class="bg-silver-tree-300 text-sm">destdir_fd</code> is just the
+      file descriptor of my current directory. Also, since I passed relative
+      paths in my original command, it makes sense for the function to pass in
+      my current directory. And my
+      <code class="bg-silver-tree-300 text-sm">file3</code>, or
+      <code class="bg-silver-tree-300 text-sm">LINK_NAME</code>, is passed as
+      <code class="bg-silver-tree-300 text-sm">dest_base</code>.
+    </p>
+    <br />
+    <p>
+      Now it’s time to parse this nested conditional operator into
+      human-readable pseudocode:
+    </p>
+    <br />
+    <pre
+      class="bg-silver-tree-300 text-sm"
+    ><code>IF symbolic\_link (I won't need this, bc the default is hardlink):
+
+    relative ? -1
+             : errnoize (symlinkat (source, destdir\_fd, dest\_base))
+
+
+IF not, or hard link (I need this):
+    beware\_hard\_dir\_link ? -1
+          : errnoize (linkat (AT\_FDCWD, source, destdir\_fd, dest\_base,
+                              logical ? AT\_SYMLINK\_FOLLOW : 0)));
+</code></pre>
+    <br />
+    <p>
+      A quick look at
+      <code class="bg-silver-tree-300 text-sm">beware_hard_dir_link</code> just
+      shows that this is a warning about making a hard link of directories:
+    </p>
+    <br />
+    <pre
+      class="bg-silver-tree-300 text-sm"
+    ><code>/\* If true, watch out for creating or removing hard links to directories.  \*/
+static bool beware\_hard\_dir\_link;
+</code></pre>
+    <br />
+    <p>
+      So it seems like if we try to create a hard link of directories, the
+      function will return -1, AKA spit us out and refuse our rude request.
+      Otherwise, we get to finally (note: definitely not finally) do the
+      linking:
+    </p>
+    <br />
+    <pre
+      class="bg-silver-tree-300 text-sm"
+    ><code>linkat (AT\_FDCWD, source, destdir\_fd, dest\_base,
+                              logical ? AT\_SYMLINK\_FOLLOW : 0))
+
+</code></pre>
+    <br />
+    <p>
+      Now, I need to determine whether
+      <code class="bg-silver-tree-300 text-sm">logical</code> is true. The
+      Manpage explains logical as such:
+    </p>
+    <br />
+    <pre class="bg-silver-tree-300 text-sm"><code> -L, --logical
+              dereference TARGETs that are symbolic links
+</code></pre>
+    <br />
+    <p>
+      Since I did not pass in the L argument, and my target is not a symbolic
+      link, safe to say the logical is false and our flag value is 0.
+    </p>
+    <br />
+    <p>
+      After a while of poking at the gnulib files, I finally found the
+      implementation of
+      <a href="https://github.com/coreutils/gnulib/blob/master/lib/linkat.c"
+        >linkat</a
+      >:
+    </p>
+    <br />
+    <pre
+      class="bg-silver-tree-300 text-sm"
+    ><code>linkat (int fd1, char const \*file1, int fd2, char const \*file2, int flag)
+{
+  if (flag &#x26; ~AT\_SYMLINK\_FOLLOW)
+    {
+      errno = EINVAL;
+      return -1;
+    }
+  return at\_func2 (fd1, file1, fd2, file2,
+                   flag ? link\_follow : link\_immediate);
+}
+</code></pre>
+    <br />
+    <p>
+      Ok, turns out linkat is yet another wrapper function. It wraps at_func2,
+      which “translates” our flag of value 0 into the
+      <code class="bg-silver-tree-300 text-sm">link_immediate</code>, whatever
+      that means. Let’s conjure up the signature of
+      <a
+        href="https://www.google.com/url?sa=t&#x26;rct=j&#x26;q=&#x26;esrc=s&#x26;source=web&#x26;cd=&#x26;ved=2ahUKEwj6s5v4n8j_AhW1kYkEHZXzBFUQFnoECA0QAQ&#x26;url=https%3A%2F%2Fsvn.netlabs.org%2Frepos%2Fports%2Fcoreutils%2Fvendor%2F8.25%2Flib%2Fat-func2.c&#x26;usg=AOvVaw3caZgzWXz0ipPnRdzRsFUC"
+        >atfunc2</a
+      >
+      (warning, this is a direct download of a c file):
+    </p>
+    <br />
+    <pre
+      class="bg-silver-tree-300 text-sm"
+    ><code>/\* Call FUNC to operate on a pair of files, where FILE1 is relative to FD1,
+   and FILE2 is relative to FD2.  If possible, do it without changing the
+   working directory.  Otherwise, resort to using save\_cwd/fchdir,
+   FUNC, restore\_cwd (up to two times).  If either the save\_cwd or the
+   restore\_cwd fails, then give a diagnostic and exit nonzero.  \*/
+int
+at\_func2 (int fd1, char const \*file1,
+          int fd2, char const \*file2,
+          int (\*func) (char const \*file1, char const \*file2))
+</code></pre>
+    <br />
+    <p>
+      Voila, link_immediate turns out to be a function. The plot thickens (or
+      continues to unwrap).
+    </p>
+    <br />
+    <p>
+      At this point, we have looked so many signatures, we forgot which of
+      TARGET (file1), LINK_NAME(file3), and AT_FDCWD(current directory) is
+      passed in as which argument. Let’s stack it down:
+    </p>
+    <br />
+    <pre
+      class="bg-silver-tree-300 text-sm"
+    ><code>(TARGET=file1 LINK\_NAME=file3)
+
+ln file1 file3
+main() (of ln.c)
+atomic\_link (char const \*TARGET, int AT\_FDCWD, char const \*LINK\_NAME)
+linkat (AT\_FDCWD, TARGET, AT\_FDCWD, LINK\_NAME,
+                              logical ? AT\_SYMLINK\_FOLLOW : 0))
+
+atfunc(AT\_FDCWD, TARGET, AT\_FDCWD, LINK\_NAME, link\_immediate)
+
+
+</code></pre>
+    <br />
+    <p>
+      Are we there yet? I don’t know, but it seems like we might call
+      link_immediate which takes TARGET, LINK_NAME, and our current directory as
+      arguments. Reading down the atfunc2 function, a very nice person has
+      written some human-readable text. And I neatly found my specific situation
+      among them:
+    </p>
+    <br />
+    <pre
+      class="bg-silver-tree-300 text-sm"
+    ><code>/\* There are 16 possible scenarios, based on whether an fd is
+     AT\_FDCWD or real, and whether a file is absolute or relative:
+
+         fd1  file1 fd2  file2  action
+     0   cwd  abs   cwd  abs    direct call
+     1   cwd  abs   cwd  rel    direct call
+     2   cwd  abs   fd   abs    direct call
+     3   cwd  abs   fd   rel    chdir to fd2
+     4   cwd  rel   cwd  abs    direct call
+\*\*\* THIS IS US, YAY!!!
+     5   cwd  rel   cwd  rel    direct call
+\*\*\* THIS IS US, YAY!!!
+     6   cwd  rel   fd   abs    direct call
+     7   cwd  rel   fd   rel    convert file1 to abs, then case 3
+     8   fd   abs   cwd  abs    direct call
+     9   fd   abs   cwd  rel    direct call
+     10  fd   abs   fd   abs    direct call
+     11  fd   abs   fd   rel    chdir to fd2
+     12  fd   rel   cwd  abs    chdir to fd1
+     13  fd   rel   cwd  rel    convert file2 to abs, then case 12
+     14  fd   rel   fd   abs    chdir to fd1
+     15a fd1  rel   fd1  rel    chdir to fd1
+     15b fd1  rel   fd2  rel    chdir to fd1, then case 7
+
+     Try some optimizations to reduce fd to AT\_FDCWD, or to at least
+     avoid converting an absolute name or doing a double chdir.  \*/
+</code></pre>
+    <br />
+    <p>
+      So the commenter prescribed ‘direct call’ to us, call what?
+      <code class="bg-silver-tree-300 text-sm">link_immediate</code>?
+      Immediately after this block of comment, I found out I was right.
+    </p>
+    <br />
+    <pre
+      class="bg-silver-tree-300 text-sm"
+    ><code>if ((fd1 == AT\_FDCWD || IS\_ABSOLUTE\_FILE\_NAME (file1))
+ &#x26;&#x26; (fd2 == AT\_FDCWD || IS\_ABSOLUTE\_FILE\_NAME (file2)))
+ return func (file1, file2); /\* Case 0–2, 4–6, 8–10. \*/
+</code></pre>
+    <br />
+    <p>
+      Ok, for us, that’s
+      <code class="bg-silver-tree-300 text-sm"
+        >link_immeidate(TARGET, LINK_NAME)</code
+      >
+      ! Praise the lord and let this be our final function-hop. I am back to
+      gnulib/lib/linkat.c to figure out what
+      <code class="bg-silver-tree-300 text-sm">link_immediate</code> does:
+    </p>
+    <br />
+    <pre class="bg-silver-tree-300 text-sm"><code>static int
+link\_immediate (char const \*file1, char const \*file2)
+{
+  char \*target = areadlink (file1);
+  if (target)
+    {
+      ,.
+}
+</code></pre>
+    <br />
+    <p>
+      We get a target value from
+      <code class="bg-silver-tree-300 text-sm">areadlink</code>, what does
+      <code class="bg-silver-tree-300 text-sm">areadlink</code> do? I dug into
+      gnulib again.
+    </p>
+    <br />
+    <pre
+      class="bg-silver-tree-300 text-sm"
+    ><code>/\* Call readlink to get the symbolic link value of FILENAME.
+   Return a pointer to that NUL-terminated string in malloc'd storage.
+   If readlink fails, return NULL and set errno.
+   If allocation fails, or if the link value is longer than SIZE\_MAX :-),
+   return NULL and set errno to ENOMEM.  \*/
+
+char \*
+areadlink (char const \*filename)
+{
+  return careadlinkat (AT\_FDCWD, filename, NULL, 0, NULL, careadlinkatcwd);
+}
+</code></pre>
+    <br />
+    <p>
+      Since there is no symbolic link of my file, I believe target in
+      <code class="bg-silver-tree-300 text-sm">link_immediate</code> will return
+      null. So let’s look at the if block that fits the null scenario:
+    </p>
+    <br />
+    <pre class="bg-silver-tree-300 text-li"><code>static int
+link\_immediate (char const \*file1, char const \*file2)
+{
+  char \*target = areadlink (file1);Aha! Now we are at link. I start peeking into the code.
+
+\#   define CreateHardLinkFunc CreateHardLink
+
+int link (const char \*file1, const char \*file2)
+{
+  char \*dir;
+  size\_t len1 = strlen (file1);
+  size\_t len2 = strlen (file2);
+
+  .../\* Handling errors, trimming unwanted slashes, safety check, etc
+
+  /\* Now create the link.  \*/
+  if (CreateHardLinkFunc (file2, file1, NULL) == 0)
+    {
+      /\* It is not documented which errors CreateHardLink() can produce.
+       \* The following conversions are based on tests on a Windows XP SP2
+       \* system. \*/
+      DWORD err = GetLastError ();
+      switch (err)
+        {
+        ...
+        }
+      return -1;
+    }
+
+  return 0;
+}
+
+
+  if (target)
+    {
+      ...//WE DONT CARE
+    }
+  if (errno == ENOMEM)
+    return -1;
+  //WE CARE
+  return link (file1, file2);
+}
+</code></pre>
+    <br />
+    <p>
+      Let’s stop here for now. I must feed the dogs and attend my neglected
+      household. My hope is that soon I will catch sight of an inode or two
+      soon, and the magic demystified.
+    </p>
+    <br />
+  </body>
+</html>
